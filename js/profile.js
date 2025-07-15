@@ -5,7 +5,12 @@ const back  = document.getElementById('profile-back');
 const phone = document.getElementById('phone');
 
 // Назад на главную
-back.onclick = () => window.location.href = 'index.html';
+// back.onclick = () => window.location.href = 'index.html';
+
+document.getElementById('profile-back').onclick = () => {
+  // перейти на profile.html
+  window.location.href = 'index.html';
+};
 
 // Подставляем телефон из localStorage (или tg.initData, если передаёте через бота)
 const stored = localStorage.getItem('user_phone');
