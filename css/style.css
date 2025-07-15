@@ -79,6 +79,7 @@ body {
   margin-top: 8px;
 }
 .list-menu ul {
+
   list-style: none;
 }
 .list-item {
@@ -91,6 +92,7 @@ body {
   font-size: 14px;
   color: #333333;
   cursor: pointer;
+  font-weight: 600;
 }
 
 /* Отступ справа у бейджа, чтобы стрелка не налезала */
