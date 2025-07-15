@@ -76,6 +76,7 @@ body {
 /* List menu */
 .list-menu {
   margin-top: 8px;
+  cursor: pointer;
 }
 .list-menu ul {
   list-style: none;
