@@ -11,9 +11,10 @@
   <header></header>
 
   <section id="profile-page">
-    <form id="profile">
-    <button id="profile-back"  class="back-btn">← Назад</button><h2>Профиль клиента</h2>
-    </form>
+    <div class="profile-header">
+      <button type="button" id="profile-back"  class="back-btn">← Назад</button>
+      <h2>Профиль клиента</h2>
+    </div>
     <form id="profile-form">
       <label>Имя</label><input type="text" id="first-name" placeholder="Ваше имя"/>
 
@@ -34,13 +35,9 @@
     tg.ready();
 
     // Переходы на отдельные HTML-файлы
-    document.getElementById("profile-back").onclick = () => {
-      alert("Наш адрес: ...");
-      window.location.href = "services.html";
-    };
-
-
-
+    document.getElementById("profile-back").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
   </script>
 </body>
 </html>
