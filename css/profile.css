@@ -7,9 +7,10 @@
 
 /* хедер с «Назад» и заголовком */
 .profile-header {
-  display: flex;
+  display: block;
   align-items: center;
   margin-bottom: 16px;
+  cursor: pointer;
 }
 .profile-header button#back-from-profile {
   background: none;
