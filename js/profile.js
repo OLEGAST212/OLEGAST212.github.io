@@ -7,7 +7,7 @@ const phone = document.getElementById('phone');
 // Назад на главную
 // back.onclick = () => window.location.href = 'index.html';
 
-document.getElementById('profile-back').onclick = () => {
+document.getElementById('back-btn').onclick = () => {
   // перейти на profile.html
   window.location.href = 'index.html';
 };
