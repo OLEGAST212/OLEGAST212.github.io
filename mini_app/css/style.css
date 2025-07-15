@@ -1,7 +1,7 @@
 /* Сброс */
 * { margin:0; padding:0; box-sizing:border-box; font-family: sans-serif; }
 body { background:#f9f9f9; color:#333; }
-
+.hidden { display: none; }
 /* Хедер */
 .header {
   display:flex; align-items:center; padding:16px;

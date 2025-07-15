@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Барбершоп — Профиль клиента</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script type="module" src="js/profile.js"></script>
+</head>
+<body>
+  <header>…ваш header…</header>
+
+  <section id="profile-page">
+    <button id="profile-back" class="back-btn">← Назад</button>
+    <h2>Профиль клиента</h2>
+    <form id="profile-form">
+      <label>Имя</label><input type="text" id="first-name" placeholder="Ваше имя"/>
+
+      <label>Фамилия</label><input type="text" id="last-name" placeholder="Ваша фамилия"/>
+
+      <label>Отчество</label><input type="text" id="patronymic" placeholder="Ваше отчество"/>
+
+      <label>Телефон</label><input type="tel" id="phone" readonly/>
+
+      <label>Email</label><input type="email" id="email" placeholder="ваш@email.ru"/>
+
+      <button type="submit" class="save-btn">Сохранить</button>
+    </form>
+  </section>
+
+  <footer>…ваш footer…</footer>
+</body>
+</html>

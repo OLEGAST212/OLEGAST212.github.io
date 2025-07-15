@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>Барбершоп — Главное</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Telegram Web App JS -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <header class="header">
+    <img src="images/logo.png" alt="Логотип" class="logo" />
+    <div class="title-block">
+      <h1>Барбер</h1>
+      <p>Шоп</p>
+    </div>
+  </header>
+
+  <nav class="top-menu">
+    <button class="menu-btn" id="btn-address">Адрес</button>
+    <button class="menu-btn" id="btn-appointments">Записи</button>
+    <button class="menu-btn" id="btn-share">Поделиться</button>
+    <button class="menu-btn" id="btn-profile">Профиль</button>
+  </nav>
+
+  <main>
+    <!-- Основная кнопка перехода в сервисы -->
+    <button id="services-btn" class="big-btn">Персональные услуги</button>
+  </main>
+
+  <footer class="footer">
+    <small>1</small>
+    <p>@Barber_HQ_Bot</p>
+  </footer>
+
+  <script>
+    // инициализируем WebApp
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    // Переходы на отдельные HTML-файлы
+    document.getElementById("services-btn").onclick = () => {
+      window.location.href = "services.html";
+    };
+    document.getElementById("btn-profile").onclick = () => {
+      window.location.href = "profile.html";
+    };
+
+    // Если нужно — обработчики для остальных кнопок:
+    document.getElementById("btn-address").onclick = () => {
+      alert("Наш адрес: ...");
+    };
+    document.getElementById("btn-appointments").onclick = () => {
+      alert("Ваши записи: ...");
+    };
+    document.getElementById("btn-share").onclick = () => {
+      tg.shareData(JSON.stringify({ url: window.location.href }));
+    };
+  </script>
+</body>
+</html>
