@@ -58,7 +58,6 @@
   <!-- Footer -->
   <footer class="footer">
     <small>30.0.0-1508</small>
-    <p>@SIBIR_BARBERSHOP_bot</p>
   </footer>
 
   <script>
@@ -66,18 +65,29 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    // Добавьте сюда обработчики кнопок при необходимости
+    // Главная кнопка
     document.getElementById('services-btn').onclick = () => {
       tg.openLink('https://olegast212.github.io/');
     };
+
+    // Иконки навигации
     document.querySelectorAll('.icon-btn').forEach(btn => {
       btn.onclick = () => {
         const action = btn.getAttribute('data-action');
         switch(action) {
-          case 'address': tg.openLink('https://yandex.ru/maps/?address=Сибирь'); break;
-          case 'appointments': tg.sendData(JSON.stringify({ action: 'appointments' })); break;
-          case 'share': tg.shareData(JSON.stringify({ url: window.location.href })); break;
-          case 'profile': tg.openLink('profile.html'); break;
+          case 'address':
+            tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
+            break;
+          case 'appointments':
+            tg.sendData(JSON.stringify({ action: 'appointments' }));
+            break;
+          case 'share':
+            tg.shareData(JSON.stringify({ url: window.location.href }));
+            break;
+          case 'profile':
+            // Переход на внутреннюю страницу профиля
+            window.location.href = 'profile.html';
+            break;
         }
       };
     });
