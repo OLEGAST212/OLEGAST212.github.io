@@ -28,6 +28,18 @@
       <button type="submit" class="save-btn">Сохранить</button>
     </form>
   </section>
+  <script>
+    // инициализируем WebApp
+    const tg = window.Telegram.WebApp;
+    tg.ready();
 
+    // Переходы на отдельные HTML-файлы
+    document.getElementById("profile-back").onclick = () => {
+      window.location.href = "index.html";
+    };
+    
+
+
+  </script>
 </body>
 </html>
