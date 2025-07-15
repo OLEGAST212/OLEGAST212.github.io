@@ -112,7 +112,7 @@ body {
 
 /* Псевдо‑элемент со стрелкой для всех пунктов */
 .list-item::after {
-  content: "❯";              /* U+203A — тонкая стрелка */
+  content: "❯";
   position: absolute;
   right: 16px;
   top: 50%;

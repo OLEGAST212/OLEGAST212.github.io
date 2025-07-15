@@ -22,6 +22,7 @@ body {
 .page-header {
   position: relative;
   height: 56px;
+  font-weight: 500;
   background-color: #FFFFFF;
 }
 .back-btn {
