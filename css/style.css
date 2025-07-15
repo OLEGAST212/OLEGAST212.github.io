@@ -1,58 +1,119 @@
-/* Сброс */
-* { margin:0; padding:0; box-sizing:border-box; font-family: sans-serif; }
-body { background:#f9f9f9; color:#333; }
-.hidden { display: none; }
-/* Хедер */
+/* css/style.css */
+
+/* Общие сбросы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #EFF3F8;
+  color: #333333;
+  line-height: 1.4;
+}
+/* Header */
 .header {
-  display:flex; align-items:center; padding:16px;
-  background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.1);
+  background-color: #FFFFFF;
+  padding: 16px;
 }
-.logo { width:40px; height:40px; margin-right:12px; }
-.title-block h1 { font-size:1.2rem; }
-.title-block p { font-size:0.9rem; color:#666; }
+.header-content {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+}
+.branding h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1F1F1F;
+}
+.branding p {
+  font-size: 12px;
+  color: #828282;
+}
 
-/* Верхнее меню */
-.top-menu {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  background:#fff; padding:8px 0; box-shadow:0 1px 2px rgba(0,0,0,0.05);
+/* Icon nav (без изображений, просто текстовые кнопки) */
+.icon-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #FFFFFF;
+  padding: 12px 0;
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #2F80ED;
   cursor: pointer;
 }
-.menu-btn {
-  background:transparent; border:none; text-align:center;
-  font-size:0.85rem; padding:8px;
-  cursor: pointer;
+.icon-btn span {
+  display: block;
 }
 
-/* Главное содержимое */
-main { padding:16px; }
+/* Main action button */
+.main-action {
+  background-color: #FFFFFF;
+  padding: 16px;
+}
 .big-btn {
-  width:100%; padding:12px; background:#0066cc;
-  color:#fff; font-size:1rem; border:none; border-radius:4px;
-  margin-bottom:16px;
+  width: 100%;
+  padding: 14px 0;
+  background-color: #2F80ED;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* Список услуг */
-#services-list ul { list-style:none; }
-#services-list li {
-  background:#fff; margin-bottom:8px; padding:12px;
-  border-radius:4px; display:flex; justify-content:space-between;
+/* List menu */
+.list-menu {
+  margin-top: 8px;
 }
-#services-list li button {
-  background:transparent; border:none; width:100%; text-align:left;
-  font-size:0.95rem;
+.list-menu ul {
+  list-style: none;
 }
-.badge {
-  background:#eee; border-radius:12px; padding:2px 6px; font-size:0.75rem;
+.list-item {
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  font-size: 14px;
+  color: #333333;
+}
+.list-item .badge {
+  margin-left: auto;
+  background-color: #F2C94C;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: #333333;
+}
+.list-item .value {
+  margin-left: auto;
 }
 
-/* Кнопка назад */
-.back-btn {
-  margin-top:12px; background:#ddd; border:none;
-  padding:10px; width:100%; border-radius:4px;
-}
-
-/* Футер */
+/* Footer */
 .footer {
-  text-align:center; padding:12px; color:#aaa; font-size:0.75rem;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 10px;
+  color: #BDBDBD;
+  margin-top: 8px;
+}
+.footer small {
+  display: block;
+  margin-bottom: 4px;
+}
+.footer p {
+  margin: 0;
 }
