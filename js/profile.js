@@ -8,8 +8,8 @@ const phone = document.getElementById('phone');
 
 document.getElementById('profile-back').onclick = () => {
   // перейти на profile.html
-  // window.location.href = 'index.html';
-  alert('Клик работает');
+  window.location.href = '/';
+
 };
 
 // Подставляем телефон из localStorage (или tg.initData, если передаёте через бота)
