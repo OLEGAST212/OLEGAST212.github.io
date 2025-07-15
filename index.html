@@ -46,14 +46,14 @@
 
   <!-- List menu -->
   <section class="list-menu">
-    <ul>
-      <li class="list-item"><span class="icon wallet"></span>Кошелёк<span class="badge">0</span></li>
-      <li class="list-item"><span class="icon shop"></span>Магазин</li>
-      <li class="list-item"><span class="icon reviews"></span>Отзывы<span class="badge">27</span></li>
-      <li class="list-item"><span class="icon about"></span>О компании</li>
-      <li class="list-item"><span class="icon language"></span>Язык<span class="value">Русский</span></li>
-    </ul>
-  </section>
+  <ul>
+    <li class="list-item" data-action="wallet">Кошелёк <span class="badge">0</span></li>
+    <li class="list-item" data-action="shop">Магазин</li>
+    <li class="list-item" data-action="reviews">Отзывы <span class="badge">27</span></li>
+    <li class="list-item" data-action="about">О компании</li>
+    <li class="list-item" data-action="language">Язык <span class="value">Русский</span></li>
+  </ul>
+</section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -91,6 +91,28 @@
         }
       };
     });
+    document.querySelectorAll('.list-item').forEach(li => {
+  li.addEventListener('click', () => {
+    const action = li.dataset.action;
+    switch (action) {
+      case 'wallet':
+        window.location.href = 'wallet.html';
+        break;
+      case 'shop':
+        window.location.href = 'shop.html';
+        break;
+      case 'reviews':
+        window.location.href = 'reviews.html';
+        break;
+      case 'about':
+        window.location.href = 'about.html';
+        break;
+      case 'language':
+        window.location.href = 'language.html';
+        break;
+    }
+  });
+});
   </script>
 </body>
 </html>
