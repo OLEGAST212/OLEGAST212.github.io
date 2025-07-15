@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>Кошелёк</title>
+  <!-- общий CSS можно переиспользовать, здесь подключаем отдельный -->
+  <link rel="stylesheet" href="css/wallet.css"/>
+  <!-- Telegram WebApp JS (нужен, если вы хотите потом шлет данные назад) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <!-- Шапка с кнопкой Назад -->
+  <section id="wallet-page">
+    <div class="page-header">
+      <button type="button" id="wallet-back" class="back-btn">← Назад</button>
+      <h2>Кошелёк</h2>
+    </div>
+
+    <div class="wallet-empty">
+      <!-- Заглушка-иконка: можно вставить img или фон -->
+      <div class="empty-icon">🕷️</div>
+      <p class="empty-title">Увы, в кошельке пусто</p>
+      <p class="empty-subtitle">У вас пока нет ни одной карты лояльности</p>
+    </div>
+  </section>
+
+  <script>
+    // Инициализируем WebApp
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    // Назад на главную страницу
+    document.getElementById('wallet-back').onclick = () => {
+      window.location.href = 'index.html';
+    };
+  </script>
+</body>
+</html>
