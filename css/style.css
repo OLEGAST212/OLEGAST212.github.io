@@ -82,7 +82,7 @@ body {
   list-style: none;
 }
 .list-item {
-  position: relative;
+  position: relative;        /* чтобы ::after работал */
   display: flex;
   align-items: center;
   background-color: #FFFFFF;
@@ -92,25 +92,34 @@ body {
   color: #333333;
   cursor: pointer;
 }
+
+/* Отступ справа у бейджа, чтобы стрелка не налезала */
 .list-item .badge {
   margin-left: auto;
+  margin-right: 24px;        /* пространство под стрелку */
   background-color: #F2C94C;
   border-radius: 12px;
   padding: 2px 6px;
   font-size: 12px;
   color: #333333;
 }
+
+/* Отступ справа у value (Язык), если нет бейджа */
 .list-item .value {
   margin-left: auto;
+  margin-right: 24px;
 }
+
+/* Псевдо‑элемент со стрелкой для всех пунктов */
 .list-item::after {
-  content: "❯";
+  content: "›";              /* U+203A — тонкая стрелка */
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
   color: #BDBDBD;
+  font-weight: normal;
 }
 
 /* Footer */
