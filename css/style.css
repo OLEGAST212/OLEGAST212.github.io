@@ -12,6 +12,7 @@ body {
   color: #333333;
   line-height: 1.4;
 }
+
 /* Header */
 .header {
   background-color: #FFFFFF;
@@ -76,13 +77,12 @@ body {
 /* List menu */
 .list-menu {
   margin-top: 8px;
-
 }
 .list-menu ul {
-
   list-style: none;
 }
 .list-item {
+  position: relative;
   display: flex;
   align-items: center;
   background-color: #FFFFFF;
@@ -102,6 +102,15 @@ body {
 }
 .list-item .value {
   margin-left: auto;
+}
+.list-item::after {
+  content: "❯";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #BDBDBD;
 }
 
 /* Footer */
