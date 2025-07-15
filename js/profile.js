@@ -1,7 +1,6 @@
 import { tg } from './common.js';
 
 const form  = document.getElementById('profile-form');
-const back  = document.getElementById('profile-back');
 const phone = document.getElementById('phone');
 
 // Назад на главную
