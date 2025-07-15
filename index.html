@@ -79,7 +79,7 @@
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
           case 'appointments':
-            tg.sendData(JSON.stringify({ action: 'appointments' }));
+            window.location.href = 'profile.html';
             break;
           case 'share':
             tg.shareData(JSON.stringify({ url: window.location.href }));
