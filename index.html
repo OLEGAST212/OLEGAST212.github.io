@@ -1,65 +1,86 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
-  />
-  <title>Барбершоп — Главное</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Telegram Web App JS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Сибирь Барбершоп</title>
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
-    <img src="images/logo.png" alt="Логотип" class="logo" />
-    <div class="title-block">
-      <h1>Барбер</h1>
-      <p>Шоп</p>
+    <div class="header-content">
+      <img src="images/logo.png" alt="Логотип" class="logo">
+      <div class="branding">
+        <h1>Сибирь</h1>
+        <p>Барбершоп</p>
+      </div>
     </div>
   </header>
 
-  <nav class="top-menu">
-    <button class="menu-btn" id="btn-address">Адрес</button>
-    <button class="menu-btn" id="btn-appointments">Записи</button>
-    <button class="menu-btn" id="btn-share">Поделиться</button>
-    <button class="menu-btn" id="btn-profile">Профиль</button>
+  <!-- Top navigation icons -->
+  <nav class="icon-nav">
+    <button class="icon-btn" data-action="address">
+      <img src="images/icon-address.svg" alt="Адрес">
+      <span>Адрес</span>
+    </button>
+    <button class="icon-btn" data-action="appointments">
+      <img src="images/icon-appointments.svg" alt="Записи">
+      <span>Записи</span>
+    </button>
+    <button class="icon-btn" data-action="share">
+      <img src="images/icon-share.svg" alt="Поделиться">
+      <span>Поделиться</span>
+    </button>
+    <button class="icon-btn" data-action="profile">
+      <img src="images/icon-profile.svg" alt="Профиль">
+      <span>Профиль</span>
+    </button>
   </nav>
 
-  <main>
-    <!-- Основная кнопка перехода в сервисы -->
+  <!-- Main action button -->
+  <section class="main-action">
     <button id="services-btn" class="big-btn">Персональные услуги</button>
-  </main>
+  </section>
 
+  <!-- List menu -->
+  <section class="list-menu">
+    <ul>
+      <li class="list-item"><span class="icon wallet"></span>Кошелёк<span class="badge">0</span></li>
+      <li class="list-item"><span class="icon shop"></span>Магазин</li>
+      <li class="list-item"><span class="icon reviews"></span>Отзывы<span class="badge">27</span></li>
+      <li class="list-item"><span class="icon about"></span>О компании</li>
+      <li class="list-item"><span class="icon language"></span>Язык<span class="value">Русский</span></li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
-    <small>1</small>
-
+    <small>30.0.0-1508</small>
+    <p>@SIBIR_BARBERSHOP_bot</p>
   </footer>
 
   <script>
-    // инициализируем WebApp
+    // Telegram WebApp initialization
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    // Переходы на отдельные HTML-файлы
-    document.getElementById("services-btn").onclick = () => {
-      window.location.href = "services.html";
+    // Добавьте сюда обработчики кнопок при необходимости
+    document.getElementById('services-btn').onclick = () => {
+      tg.openLink('https://olegast212.github.io/');
     };
-    document.getElementById("btn-profile").onclick = () => {
-      window.location.href = "profile.html";
-    };
-
-    // Если нужно — обработчики для остальных кнопок:
-    document.getElementById("btn-address").onclick = () => {
-      window.open('https://yandex.ru/maps/org/sibir/237591966386/','_blank');
-    };
-    document.getElementById("btn-appointments").onclick = () => {
-      alert("Ваши записи: ...");
-    };
-    document.getElementById("btn-share").onclick = () => {
-      tg.shareData(JSON.stringify({ url: window.location.href }));
-    };
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+      btn.onclick = () => {
+        const action = btn.getAttribute('data-action');
+        switch(action) {
+          case 'address': tg.openLink('https://yandex.ru/maps/?address=Сибирь'); break;
+          case 'appointments': tg.sendData(JSON.stringify({ action: 'appointments' })); break;
+          case 'share': tg.shareData(JSON.stringify({ url: window.location.href })); break;
+          case 'profile': tg.openLink('profile.html'); break;
+        }
+      };
+    });
   </script>
 </body>
 </html>
