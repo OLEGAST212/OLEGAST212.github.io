@@ -7,9 +7,10 @@ const phone = document.getElementById('phone');
 // Назад на главную
 // back.onclick = () => window.location.href = 'index.html';
 
-document.getElementById('back-btn').onclick = () => {
+document.getElementById('profile-back').onclick = () => {
   // перейти на profile.html
-  window.location.href = 'index.html';
+  // window.location.href = 'index.html';
+  alert('Клик работает');
 };
 
 // Подставляем телефон из localStorage (или tg.initData, если передаёте через бота)
