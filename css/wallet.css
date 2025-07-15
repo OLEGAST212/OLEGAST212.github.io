@@ -1,0 +1,68 @@
+/* css/wallet.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #EFF3F8;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333333;
+  line-height: 1.4;
+}
+
+/* Контейнер страницы */
+#wallet-page {
+  padding: 16px;
+  background-color: #FFFFFF;
+  min-height: 100vh;
+}
+
+/* Заголовок страницы */
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.back-btn {
+  background: none;
+  border: none;
+  color: #2F80ED;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+.page-header h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1F1F1F;
+  margin: 0;
+}
+
+/* Пустое состояние кошелька */
+.wallet-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+}
+.empty-icon {
+  font-size: 64px;
+  opacity: 0.3;
+}
+.empty-title {
+  margin-top: 24px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+}
+.empty-subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #828282;
+  text-align: center;
+  padding: 0 16px;
+}
