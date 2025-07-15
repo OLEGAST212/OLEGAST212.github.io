@@ -1,44 +1,68 @@
-/* контейнер страницы */
-#profile-page {
-  padding: 16px;
-  background: #ffffff; /* белый фон за пределами полей */
-  min-height: 100vh;
-}
+/* css/profile.css */
 
-/* хедер с «Назад» и заголовком */
-.profile-header {
-  display: block;
-  align-items: center;
-  margin-bottom: 16px;
-
-}
-.back-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-right: 8px;
-  font-size: 14px;
-  line-height: 18px;
-  color: #2F80ED;
-  cursor: pointer;
-}
-.profile-header h2 {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
+/* Сброс */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #EFF3F8;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333333;
 }
 
-/* форма */
+/* Контейнер страницы */
+#profile-page {
+  background-color: #FFFFFF;
+  min-height: 100vh;
+}
+
+/* Шапка */
+.profile-header {
+  position: relative;
+  height: 56px;
+  background-color: #FFFFFF;
+}
+.back-btn {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #2F80ED;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.back-btn::before {
+  content: "<";
+  margin-right: 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+.profile-header h2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1F1F1F;
+}
+
+/* Форма профиля */
 #profile-form {
-  background: #F5F7FA; /* светло‑серый блок под полями */
+  margin: 80px 16px 0 16px;
+  background: #F5F7FA;
   padding: 16px;
   border-radius: 12px;
 }
-
-/* лейблы */
 #profile-form label {
   display: block;
   font-size: 10px;
@@ -48,13 +72,11 @@
   margin-top: 16px;
   margin-bottom: 4px;
 }
-
-/* инпуты */
 #profile-form input {
   width: 100%;
   height: 40px;
   padding: 0 12px;
-  background: #FFFFFF; /* белый фон самих полей */
+  background: #FFFFFF;
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   font-size: 14px;
@@ -63,22 +85,17 @@
   box-sizing: border-box;
 }
 
-/* кнопка Сохранить */
+/* Кнопка «Сохранить» */
 .save-btn {
   display: block;
-  width: 100%;
+  width: calc(100% - 32px);
   height: 48px;
-  margin-top: 24px;
-  background: #FFD600; /* желтый цвет */
+  margin: 24px 16px 0 16px;
+  background: #FFD600;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   color: #000000;
   cursor: pointer;
-}
-
-/* скрытие секции */
-#profile-page.hidden {
-  display: none;
 }
