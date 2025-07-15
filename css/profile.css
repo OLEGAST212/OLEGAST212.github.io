@@ -40,7 +40,7 @@ body {
   margin: 0;
 }
 .back-btn::before {
-  content: "<";
+  content: "❮";
   margin-right: 8px;
   font-size: 18px;
   line-height: 1;
