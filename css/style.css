@@ -79,7 +79,7 @@ body {
 
 }
 .list-menu ul {
-  cursor: pointer;
+
   list-style: none;
 }
 .list-item {
@@ -90,6 +90,7 @@ body {
   border-bottom: 1px solid #E0E0E0;
   font-size: 14px;
   color: #333333;
+  cursor: pointer;
 }
 .list-item .badge {
   margin-left: auto;
