@@ -1,4 +1,3 @@
-// js/profile.js
 import { tg } from "./common.js";
 
 console.log("🛠 profile.js загружен");
@@ -8,44 +7,50 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("⚙️ WebApp готов");
 
   // Кнопка «Назад»
-  const backBtn = document.getElementById("profile-back");
-  backBtn.addEventListener("click", () => {
-    console.log("🔙 Нажата кнопка Назад");
-    window.location.href = "index.html";
-  });
+  document.getElementById("profile-back")
+          .addEventListener("click", () => window.location.href = "index.html");
 
-  // Поле телефона
-  const phoneInput = document.getElementById("phone");
-  const stored = localStorage.getItem("user_phone");
-  if (stored) {
-    phoneInput.value = stored;
-  } else {
-    const params = new URLSearchParams(window.location.search);
-    const p = params.get("phone");
-    if (p) {
-      phoneInput.value = p;
-      localStorage.setItem("user_phone", p);
+  // Поле телефона, Имя, Фамилия, Отчество, Email
+  const fields = {
+    first_name: document.getElementById("first-name"),
+    last_name:  document.getElementById("last-name"),
+    patronymic: document.getElementById("profile-patronymic"),
+    phone:      document.getElementById("phone"),
+    email:      document.getElementById("email"),
+  };
+
+  // 1) Сначала localStorage
+  const storedPhone = localStorage.getItem("user_phone");
+  if (storedPhone) {
+    fields.phone.value = storedPhone;
+  }
+
+  // 2) Потом URL‑параметры (они перезапишут, если нужно)
+  const params = new URLSearchParams(window.location.search);
+  for (const key of ["first_name","last_name","patronymic","phone","email"]) {
+    const v = params.get(key);
+    if (v !== null) {
+      fields[key].value = v;
+      if (key === "phone") localStorage.setItem("user_phone", v);
     }
   }
 
   // Отправка формы
-  const form = document.getElementById("profile-form");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const data = {
-      type: "profile_update",
-      payload: {
-        first_name:  document.getElementById("first-name").value,
-        last_name:   document.getElementById("last-name").value,
-        patronymic:  document.getElementById("profile-patronymic").value,
-        phone:       phoneInput.value,
-        email:       document.getElementById("email").value,
-      },
-    };
-
-    console.log("📤 Отправка данных боту:", data);
-    tg.sendData(JSON.stringify(data));
-    // !!! Убираем tg.close(), чтобы окно не закрывалось !!!
-  });
+  document.getElementById("profile-form")
+    .addEventListener("submit", e => {
+      e.preventDefault();
+      const payload = {
+        first_name: fields.first_name.value,
+        last_name:  fields.last_name.value,
+        patronymic: fields.patronymic.value,
+        phone:      fields.phone.value,
+        email:      fields.email.value,
+      };
+      console.log("📤 Отправка данных боту:", payload);
+      tg.sendData(JSON.stringify({
+        type:    "profile_update",
+        payload
+      }));
+      // tg.close();  // пока не закрываем, чтобы увидеть логи
+    });
 });
