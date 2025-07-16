@@ -8,30 +8,34 @@ const stored = localStorage.getItem("user_phone");
 if (stored) {
   phoneInput.value = stored;
 } else {
-  // 2) иначе разбираем URL
+  // 2) иначе разбираем URL и сохраняем
   const params = new URLSearchParams(window.location.search);
   const p = params.get("phone");
   if (p) {
     phoneInput.value = p;
-    // сохраняем сразу, чтобы дальше localStorage заработал
     localStorage.setItem("user_phone", p);
   }
 }
 
-// остальной ваш код:
+// Обработчик сабмита формы
 form.onsubmit = (e) => {
   e.preventDefault();
+
   const data = {
     type: "profile_update",
     payload: {
-      first_name: document.getElementById("first-name").value,
-      last_name:  document.getElementById("last-name").value,
-      patronymic: document.getElementById("profile-patronymic").value,
-      phone:      phoneInput.value,
-      email:      document.getElementById("email").value,
+      first_name:  document.getElementById("first-name").value,
+      last_name:   document.getElementById("last-name").value,
+      patronymic:  document.getElementById("profile-patronymic").value,
+      phone:       phoneInput.value,
+      email:       document.getElementById("email").value,
     },
   };
+
+  // Сохраняем в localStorage
   localStorage.setItem("user_phone", data.payload.phone);
+
+  // Отправляем данные боту и закрываем WebApp
   tg.sendData(JSON.stringify(data));
   tg.close();
 };
