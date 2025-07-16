@@ -1,56 +1,45 @@
 import { tg } from "./common.js";
 
-console.log("🛠 profile.js загружен");
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   tg.ready();
-  console.log("⚙️ WebApp готов");
 
-  // Кнопка «Назад»
-  document.getElementById("profile-back")
-          .addEventListener("click", () => window.location.href = "index.html");
+  // получили initData, запросили профиль
+  const initData = Telegram.WebApp.initData;
+  const resp = await fetch(`/api/profile?init_data=${encodeURIComponent(initData)}`);
+  const profile = await resp.json();
 
-  // Поле телефона, Имя, Фамилия, Отчество, Email
-  const fields = {
-    first_name: document.getElementById("first-name"),
-    last_name:  document.getElementById("last-name"),
-    patronymic: document.getElementById("profile-patronymic"),
-    phone:      document.getElementById("phone"),
-    email:      document.getElementById("email"),
-  };
-
-  // 1) Сначала localStorage
-  const storedPhone = localStorage.getItem("user_phone");
-  if (storedPhone) {
-    fields.phone.value = storedPhone;
+  // заполняем поля
+  {
+    const map = {
+      "first-name": profile.first_name,
+      "last-name":  profile.last_name,
+      "profile-patronymic": profile.patronymic,
+      "phone":      profile.phone,
+      "email":      profile.email
+    };
+    for (const [id, val] of Object.entries(map))
+      if (val !== undefined) document.getElementById(id).value = val;
   }
 
-  // 2) Потом URL‑параметры (они перезапишут, если нужно)
-  const params = new URLSearchParams(window.location.search);
-  for (const key of ["first_name","last_name","patronymic","phone","email"]) {
-    const v = params.get(key);
-    if (v !== null) {
-      fields[key].value = v;
-      if (key === "phone") localStorage.setItem("user_phone", v);
-    }
-  }
+  // Назад
+  document.getElementById("profile-back").onclick = () => window.location.href = "index.html";
 
-  // Отправка формы
-  document.getElementById("profile-form")
-    .addEventListener("submit", e => {
-      e.preventDefault();
-      const payload = {
-        first_name: fields.first_name.value,
-        last_name:  fields.last_name.value,
-        patronymic: fields.patronymic.value,
-        phone:      fields.phone.value,
-        email:      fields.email.value,
-      };
-      console.log("📤 Отправка данных боту:", payload);
-      tg.sendData(JSON.stringify({
-        type:    "profile_update",
-        payload
-      }));
-      // tg.close();  // пока не закрываем, чтобы увидеть логи
+  // Сохранение
+  document.getElementById("profile-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const payload = {
+      init_data:  Telegram.WebApp.initData,
+      first_name:  document.getElementById("first-name").value,
+      last_name:   document.getElementById("last-name").value,
+      patronymic:  document.getElementById("profile-patronymic").value,
+      phone:       document.getElementById("phone").value,
+      email:       document.getElementById("email").value,
+    };
+    await fetch("/api/profile", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(payload)
     });
+    alert("✅ Сохранено");
+  });
 });
