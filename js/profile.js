@@ -1,41 +1,60 @@
 import { tg } from "./common.js";
 
-const form  = document.getElementById("profile-form");
-const phoneInput = document.getElementById("phone");
+// Ждём, пока страница подгрузится
+document.addEventListener("DOMContentLoaded", () => {
+  tg.ready();
 
-// 1) пытаемся взять из localStorage (если уже был заход)
-const stored = localStorage.getItem("user_phone");
-if (stored) {
-  phoneInput.value = stored;
-} else {
-  // 2) иначе разбираем URL и сохраняем
-  const params = new URLSearchParams(window.location.search);
-  const p = params.get("phone");
-  if (p) {
-    phoneInput.value = p;
-    localStorage.setItem("user_phone", p);
+  // Обработчик кнопки «Назад»
+  const backBtn = document.getElementById("profile-back");
+  backBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+
+  // Элементы формы
+  const form = document.getElementById("profile-form");
+  const phoneInput = document.getElementById("phone");
+
+  // 1) Попробовать взять телефон из localStorage
+  const stored = localStorage.getItem("user_phone");
+  if (stored) {
+    phoneInput.value = stored;
+  } else {
+    // 2) Попробовать взять из URL-параметра ?phone=
+    const params = new URLSearchParams(window.location.search);
+    const p = params.get("phone");
+    if (p) {
+      phoneInput.value = p;
+      localStorage.setItem("user_phone", p);
+    }
   }
-}
 
-// Обработчик сабмита формы
-form.onsubmit = (e) => {
-  e.preventDefault();
+  // Сабмит формы
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  const data = {
-    type: "profile_update",
-    payload: {
+    // Собираем данные
+    const payload = {
       first_name:  document.getElementById("first-name").value,
       last_name:   document.getElementById("last-name").value,
       patronymic:  document.getElementById("profile-patronymic").value,
       phone:       phoneInput.value,
       email:       document.getElementById("email").value,
-    },
-  };
+    };
 
-  // Сохраняем в localStorage
-  localStorage.setItem("user_phone", data.payload.phone);
+    // Сохраняем телефон локально
+    localStorage.setItem("user_phone", payload.phone);
 
-  // Отправляем данные боту и закрываем WebApp
-  tg.sendData(JSON.stringify(data));
-  tg.close();
-};
+    // Отправляем в бота
+    try {
+      tg.sendData(JSON.stringify({
+        type: "profile_update",
+        payload
+      }));
+      // Даем микрозадержку, чтобы данные успели улететь
+      setTimeout(() => tg.close(), 150);
+    } catch (err) {
+      console.error("Ошибка при отправке данных:", err);
+      alert("Не удалось отправить данные. Попробуйте ещё раз.");
+    }
+  });
+});
