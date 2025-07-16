@@ -1,42 +1,37 @@
 import { tg } from "./common.js";
 
 const form  = document.getElementById("profile-form");
-const phone = document.getElementById("phone");
+const phoneInput = document.getElementById("phone");
 
-// Кнопка «← Назад»
-document.getElementById("profile-back").onclick = () => {
-  window.location.href = "index.html";
-};
-
-// Подставляем телефон, если он в localStorage
+// 1) пытаемся взять из localStorage (если уже был заход)
 const stored = localStorage.getItem("user_phone");
 if (stored) {
-  phone.value = stored;
+  phoneInput.value = stored;
+} else {
+  // 2) иначе разбираем URL
+  const params = new URLSearchParams(window.location.search);
+  const p = params.get("phone");
+  if (p) {
+    phoneInput.value = p;
+    // сохраняем сразу, чтобы дальше localStorage заработал
+    localStorage.setItem("user_phone", p);
+  }
 }
 
-// Отправка формы
+// остальной ваш код:
 form.onsubmit = (e) => {
   e.preventDefault();
-
   const data = {
-    type: "profile_update",   // должен совпадать с тем, что обрабатывает бот
+    type: "profile_update",
     payload: {
-      first_name:  document.getElementById("first-name").value,
-      last_name:   document.getElementById("last-name").value,
-      patronymic:  document.getElementById("profile-patronymic").value,
-      phone:       phone.value,
-      email:       document.getElementById("email").value,
+      first_name: document.getElementById("first-name").value,
+      last_name:  document.getElementById("last-name").value,
+      patronymic: document.getElementById("profile-patronymic").value,
+      phone:      phoneInput.value,
+      email:      document.getElementById("email").value,
     },
   };
-
-  // Сохраняем телефон локально на будущее
   localStorage.setItem("user_phone", data.payload.phone);
-
-  // Шлём боту
-  tg.sendData(JSON.stringify({
-  type: "profile_update",
-  payload: { /* ... */ }
-}));
-  // Закрываем WebApp и возвращаемся в чат
+  tg.sendData(JSON.stringify(data));
   tg.close();
 };
