@@ -33,8 +33,10 @@ form.onsubmit = (e) => {
   localStorage.setItem("user_phone", data.payload.phone);
 
   // Шлём боту
-  tg.sendData(JSON.stringify(data));
-
+  tg.sendData(JSON.stringify({
+  type: "profile_update",
+  payload: { /* ... */ }
+}));
   // Закрываем WebApp и возвращаемся в чат
   tg.close();
 };
