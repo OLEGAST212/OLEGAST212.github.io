@@ -1,5 +1,5 @@
 import { tg } from "./common.js";
-console.log("🛠 profile.js загружен");   
+console.log("🛠 profile.js загружен");
 // Ждём, пока страница подгрузится
 document.addEventListener("DOMContentLoaded", () => {
   tg.ready();
@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "profile_update",
         payload
       }));
-      // Даем микрозадержку, чтобы данные успели улететь
-      setTimeout(() => tg.close(), 150);
+
     } catch (err) {
       console.error("Ошибка при отправке данных:", err);
       alert("Не удалось отправить данные. Попробуйте ещё раз.");
