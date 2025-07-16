@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("profile-back");
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
+    console.log(" загружен");
   });
 
   // Элементы формы
