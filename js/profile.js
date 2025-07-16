@@ -1,26 +1,25 @@
+// js/profile.js
 import { tg } from "./common.js";
+
 console.log("🛠 profile.js загружен");
-// Ждём, пока страница подгрузится
+
 document.addEventListener("DOMContentLoaded", () => {
   tg.ready();
+  console.log("⚙️ WebApp готов");
 
-  // Обработчик кнопки «Назад»
+  // Кнопка «Назад»
   const backBtn = document.getElementById("profile-back");
   backBtn.addEventListener("click", () => {
+    console.log("🔙 Нажата кнопка Назад");
     window.location.href = "index.html";
-    console.log(" загружен");
   });
 
-  // Элементы формы
-  const form = document.getElementById("profile-form");
+  // Поле телефона
   const phoneInput = document.getElementById("phone");
-
-  // 1) Попробовать взять телефон из localStorage
   const stored = localStorage.getItem("user_phone");
   if (stored) {
     phoneInput.value = stored;
   } else {
-    // 2) Попробовать взять из URL-параметра ?phone=
     const params = new URLSearchParams(window.location.search);
     const p = params.get("phone");
     if (p) {
@@ -29,32 +28,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Сабмит формы
+  // Отправка формы
+  const form = document.getElementById("profile-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Собираем данные
-    const payload = {
-      first_name:  document.getElementById("first-name").value,
-      last_name:   document.getElementById("last-name").value,
-      patronymic:  document.getElementById("profile-patronymic").value,
-      phone:       phoneInput.value,
-      email:       document.getElementById("email").value,
+    const data = {
+      type: "profile_update",
+      payload: {
+        first_name:  document.getElementById("first-name").value,
+        last_name:   document.getElementById("last-name").value,
+        patronymic:  document.getElementById("profile-patronymic").value,
+        phone:       phoneInput.value,
+        email:       document.getElementById("email").value,
+      },
     };
 
-    // Сохраняем телефон локально
-    localStorage.setItem("user_phone", payload.phone);
-
-    // Отправляем в бота
-    try {
-      tg.sendData(JSON.stringify({
-        type: "profile_update",
-        payload
-      }));
-
-    } catch (err) {
-      console.error("Ошибка при отправке данных:", err);
-      alert("Не удалось отправить данные. Попробуйте ещё раз.");
-    }
+    console.log("📤 Отправка данных боту:", data);
+    tg.sendData(JSON.stringify(data));
+    // !!! Убираем tg.close(), чтобы окно не закрывалось !!!
   });
 });
