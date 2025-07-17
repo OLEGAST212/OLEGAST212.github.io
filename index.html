@@ -26,7 +26,7 @@
       <img src="images/icon-address.png" alt="Адрес">
       <span>Адрес</span>
     </button>
-    <button class="icon-btn" data-action="appointments">
+    <button class="icon-btn" data-action="record">
       <img src="images/icon-appointments.png" alt="Записи">
       <span>Записи</span>
     </button>
@@ -42,7 +42,7 @@
 
   <!-- Main action -->
   <section class="main-action">
-    <button id="services-btn" class="big-btn">Персональные услуги</button>
+    <button id="services-btn" class="big-btn" data-action="appointments">Персональные услуги</button>
   </section>
 
   <!-- List menu -->
@@ -92,7 +92,7 @@
           case 'address':
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
-          case 'appointments':
+          case 'record':
             location.href = 'record.html';
             break;
           case 'share':
@@ -109,7 +109,17 @@
         }
       });
     });
+    document.querySelectorAll('.big-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        switch (action) {
+          case 'appointments':
+            location.href = 'appointments.html';
+            break;
 
+        }
+      });
+    });
     // Главная кнопка
     document.getElementById('services-btn').addEventListener('click', () => {
       tg.openLink('https://olegast212.github.io/');
