@@ -127,8 +127,6 @@
   </script>
 <script>
     // Ждём, пока Telegram WebApp полностью проинициализируется
-    const tg = Telegram.WebApp;
-    tg.ready();
     console.log('WebApp запущен, shareData=', typeof tg.shareData);
 
     document.getElementById('share-btn').addEventListener('click', () => {
