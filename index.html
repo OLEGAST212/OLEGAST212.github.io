@@ -6,7 +6,6 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Сибирь Барбершоп</title>
   <link rel="stylesheet" href="css/style.css">
-  <!-- Telegram Web App JS API -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -78,14 +77,14 @@
   </footer>
 
   <script>
-    // Инициализируем Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.ready();
 
+    // Общая строка для шейра
     const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
     const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
 
-    // Обработчик всех icon-btn
+    // Обработчик верхних иконок
     document.querySelectorAll('.icon-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const action = btn.dataset.action;
@@ -93,65 +92,38 @@
           case 'address':
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
-
           case 'appointments':
-            window.location.href = 'record.html';
+            location.href = 'record.html';
             break;
-
           case 'share':
-            // 1) Telegram WebApp API
-            if (typeof tg.shareData === 'function') {
-              tg.shareData({ text: shareText, url: shareUrl });
-              return;
-            }
-            // 2) Web Share API
-            if (navigator.share) {
-              navigator.share({
-                title: shareText,
-                text:  shareText,
-                url:   shareUrl
-              }).catch(console.warn);
-              return;
-            }
-            // 3) Telegram‑шейр через openLink
-            const tgShareLink =
+            // Единственный способ, который стабильно работает на телефоне:
+            const tgShare =
               'https://t.me/share/url?'
               + 'url='  + encodeURIComponent(shareUrl)
               + '&text=' + encodeURIComponent(shareText);
-            tg.openLink(tgShareLink);
+            tg.openLink(tgShare);
             break;
-
           case 'profile':
-            window.location.href = 'profile.html';
+            location.href = 'profile.html';
             break;
         }
       });
     });
 
-    // Главная кнопка «Персональные услуги»
+    // Главная кнопка
     document.getElementById('services-btn').addEventListener('click', () => {
       tg.openLink('https://olegast212.github.io/');
     });
 
-    // Обработчик пунктов списка
+    // Нижнее меню
     document.querySelectorAll('.list-item').forEach(li => {
       li.addEventListener('click', () => {
         switch (li.dataset.action) {
-          case 'wallet':
-            window.location.href = 'wallet.html';
-            break;
-          case 'shop':
-            window.location.href = 'shop.html';
-            break;
-          case 'reviews':
-            window.location.href = 'reviews.html';
-            break;
-          case 'about':
-            window.location.href = 'about.html';
-            break;
-          case 'language':
-            window.location.href = 'language.html';
-            break;
+          case 'wallet':   location.href = 'wallet.html'; break;
+          case 'shop':     location.href = 'shop.html';   break;
+          case 'reviews':  location.href = 'reviews.html';break;
+          case 'about':    location.href = 'about.html';  break;
+          case 'language': location.href = 'language.html';break;
         }
       });
     });
