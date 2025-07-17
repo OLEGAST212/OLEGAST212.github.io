@@ -1,103 +1,108 @@
-/* — Обнуление и фон — */
-body {
+/* css/style.css */
+
+/* Общие сбросы */
+* {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f2f3f5;
-  color: #1f1f1f;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #EFF3F8;
+  color: #333333;
+  line-height: 1.4;
 }
 
-/* — Header (Telegram WebApp тулбар) — */
-.app-header {
-  background: #fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
-  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 16px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
+/* Header */
+.header {
+  background-color: #FFFFFF;
+  padding: 16px;
 }
-.brand {
+.header-content {
   display: flex;
   align-items: center;
 }
-.brand__logo {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
+/* Логотип теперь круглый */
+.logo {
+  width: 32px;
+  height: 32px;
   margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.brand__info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.brand__name {
+.branding h1 {
   font-size: 18px;
   font-weight: 600;
-  margin: 0;
+  color: #1F1F1F;
 }
-.brand__subtitle {
-  font-size: 14px;
-  color: #6b6b6b;
-  margin: 0;
+.branding p {
+  font-size: 12px;
+  color: #828282;
 }
 
-/* — Top icons — */
+/* Icon nav */
 .icon-nav {
   display: flex;
   justify-content: space-around;
-  background: #fff;
-  padding: 8px 0;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+  background-color: #FFFFFF;
+  padding: 12px 0;
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
 }
+/* Картинки в иконках тоже делаем круглыми */
 .icon-btn {
   background: none;
   border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-size: 12px;
-  color: #1f1f1f;
+  color: #2F80ED;
   cursor: pointer;
+}
+.icon-btn span {
+  display: block;
 }
 .icon-btn img {
   width: 24px;
   height: 24px;
-  margin-bottom: 4px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-/* — Main action — */
+/* Main action button */
 .main-action {
+  background-color: #FFFFFF;
   padding: 16px;
-  text-align: center;
 }
 .big-btn {
   width: 100%;
-  padding: 12px 0;
-  font-size: 16px;
-  background: #2081e2;
-  color: #fff;
+  padding: 14px 0;
+  background-color: #2F80ED;
+  color: #FFFFFF;
   border: none;
   border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* — List menu — */
+/* List menu */
 .list-menu {
-  margin: 16px 0;
-  background: #fff;
+  margin-top: 8px;
 }
 .list-menu ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
+/* Иконки в списке тоже делаем круглые */
 .list-item {
+  position: relative; /* чтобы ::after работал */
   display: flex;
   align-items: center;
+  background-color: #FFFFFF;
   padding: 12px 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #E0E0E0;
+  font-size: 14px;
+  color: #333333;
   cursor: pointer;
+  font-weight: 600;
 }
 .list-item:last-child {
   border-bottom: none;
@@ -106,26 +111,49 @@ body {
   width: 20px;
   height: 20px;
   margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.list-item span {
-  flex: 1;
-}
-.badge {
-  background: #e1e1e1;
+/* Бейдж */
+.list-item .badge {
+  margin-left: auto;
+  margin-right: 24px;
+  background-color: #F2C94C;
   border-radius: 12px;
-  padding: 2px 8px;
+  padding: 2px 6px;
   font-size: 12px;
-  color: #333;
+  color: #333333;
 }
-.value {
-  font-size: 12px;
-  color: #555;
+/* «Значение» (например, язык) */
+.list-item .value {
+  margin-left: auto;
+  margin-right: 24px;
+}
+/* Стрелка */
+.list-item::after {
+  content: "❯";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #BDBDBD;
+  font-weight: normal;
 }
 
-/* — Footer — */
+/* Footer */
 .footer {
+  background-color: #FFFFFF;
   text-align: center;
   padding: 12px 0;
-  font-size: 12px;
-  color: #888;
+  font-size: 10px;
+  color: #BDBDBD;
+  margin-top: 8px;
+}
+.footer small {
+  display: block;
+  margin-bottom: 4px;
+}
+.footer p {
+  margin: 0;
 }
