@@ -6,73 +6,154 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Сибирь Барбершоп</title>
   <link rel="stylesheet" href="css/style.css">
-  <!-- Telegram Web App JS -->
+  <!-- Telegram Web App JS API -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <!-- ... ваш хэдер, навигация, контент ... -->
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <img src="images/logo.jpg" alt="Логотип" class="logo">
+      <div class="branding">
+        <h1>Сибирь</h1>
+        <p>Барбершоп</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top icons -->
   <nav class="icon-nav">
-    <!-- ... другие кнопки ... -->
+    <button class="icon-btn" data-action="address">
+      <img src="images/icon-address.png" alt="Адрес">
+      <span>Адрес</span>
+    </button>
+    <button class="icon-btn" data-action="appointments">
+      <img src="images/icon-appointments.png" alt="Записи">
+      <span>Записи</span>
+    </button>
     <button id="share-btn" class="icon-btn" data-action="share">
       <img src="images/icon-share.png" alt="Поделиться">
       <span>Поделиться</span>
     </button>
-    <!-- ... -->
+    <button class="icon-btn" data-action="profile">
+      <img src="images/icon-profile.png" alt="Профиль">
+      <span>Профиль</span>
+    </button>
   </nav>
 
-  <!-- ... остальной контент ... -->
+  <!-- Main action -->
+  <section class="main-action">
+    <button id="services-btn" class="big-btn">Персональные услуги</button>
+  </section>
 
+  <!-- List menu -->
+  <section class="list-menu">
+    <ul>
+      <li class="list-item" data-action="wallet">
+        <img src="images/icon-wallet.png" alt="" class="list-icon">
+        Кошелёк <span class="badge">0</span>
+      </li>
+      <li class="list-item" data-action="shop">
+        <img src="images/icon-shop.png" alt="" class="list-icon">
+        Магазин
+      </li>
+      <li class="list-item" data-action="reviews">
+        <img src="images/icon-reviews.png" alt="" class="list-icon">
+        Отзывы <span class="badge">27</span>
+      </li>
+      <li class="list-item" data-action="about">
+        <img src="images/icon-about.png" alt="" class="list-icon">
+        О компании
+      </li>
+      <li class="list-item" data-action="language">
+        <img src="images/icon-language.png" alt="" class="list-icon">
+        Язык <span class="value">Русский</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
     <small>30.0.0-1508</small>
   </footer>
 
   <script>
-    // 1) Инициализируем WebApp
+    // Инициализируем Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.ready();
-    console.log("✅ WebApp ready, shareData:", typeof tg.shareData);
 
-    // 2) Остальные кнопки (адрес, записи, профиль...)
+    const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
+    const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
+
+    // Обработчик всех icon-btn
     document.querySelectorAll('.icon-btn').forEach(btn => {
-      const action = btn.dataset.action;
-      btn.onclick = () => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
         switch (action) {
           case 'address':
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
+
           case 'appointments':
             window.location.href = 'record.html';
             break;
-          case 'profile':
-            window.location.href = 'profile.html';
-            break;
-          case 'share':
-            // Ниже — код «Поделиться»
-            const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
-            const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
 
-            // A) Telegram WebApp API
+          case 'share':
+            // 1) Telegram WebApp API
             if (typeof tg.shareData === 'function') {
               tg.shareData({ text: shareText, url: shareUrl });
-              console.log('▶ tg.shareData called');
               return;
             }
-            // B) Web Share API
+            // 2) Web Share API
             if (navigator.share) {
               navigator.share({
                 title: shareText,
                 text:  shareText,
                 url:   shareUrl
-              })
-              .then(() => console.log('▶ navigator.share OK'))
-              .catch(e => console.warn('▶ navigator.share error', e));
+              }).catch(console.warn);
               return;
             }
-            // C) prompt‑fallback
-            window.prompt('Скопируйте ссылку и поделитесь:', shareUrl);
+            // 3) Telegram‑шейр через openLink
+            const tgShareLink =
+              'https://t.me/share/url?'
+              + 'url='  + encodeURIComponent(shareUrl)
+              + '&text=' + encodeURIComponent(shareText);
+            tg.openLink(tgShareLink);
+            break;
+
+          case 'profile':
+            window.location.href = 'profile.html';
             break;
         }
-      };
+      });
+    });
+
+    // Главная кнопка «Персональные услуги»
+    document.getElementById('services-btn').addEventListener('click', () => {
+      tg.openLink('https://olegast212.github.io/');
+    });
+
+    // Обработчик пунктов списка
+    document.querySelectorAll('.list-item').forEach(li => {
+      li.addEventListener('click', () => {
+        switch (li.dataset.action) {
+          case 'wallet':
+            window.location.href = 'wallet.html';
+            break;
+          case 'shop':
+            window.location.href = 'shop.html';
+            break;
+          case 'reviews':
+            window.location.href = 'reviews.html';
+            break;
+          case 'about':
+            window.location.href = 'about.html';
+            break;
+          case 'language':
+            window.location.href = 'language.html';
+            break;
+        }
+      });
     });
   </script>
 </body>
