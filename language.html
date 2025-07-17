@@ -2,27 +2,57 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Язык</title>
-  <link rel="stylesheet" href="css/shop.css"/>
+  <link rel="stylesheet" href="css/language.css"/>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <section id="shop-page">
-    <div class="page-header">
-      <button type="button" id="shop-back" class="back-btn">Назад</button>
-      <h2>Язык</h2>
-    </div>
+  <div class="page-header">
+    <button type="button" id="lang-back" class="back-btn">❮ Назад</button>
+    <h2>Язык</h2>
+  </div>
 
-  </section>
+  <ul class="lang-list">
+    <li class="lang-item selected" data-lang="ru">
+      <img src="images/flag-ru.svg" alt="Russian flag" class="flag"/>
+      <div class="info">
+        <span class="title">Russian</span>
+        <span class="subtitle">Русский</span>
+      </div>
+      <div class="radio"><span></span></div>
+    </li>
+    <li class="lang-item" data-lang="en">
+      <img src="images/flag-en.svg" alt="English flag" class="flag"/>
+      <div class="info">
+        <span class="title">English</span>
+        <span class="subtitle">Английский</span>
+      </div>
+      <div class="radio"><span></span></div>
+    </li>
+  </ul>
 
   <script>
-    const tg = window.Telegram.WebApp;
+    const tg = Telegram.WebApp;
     tg.ready();
 
-    document.getElementById('shop-back').onclick = () => {
-      window.location.href = 'index.html';
+    // Назад
+    document.getElementById("lang-back").onclick = () => {
+      window.location.href = "index.html";
     };
+
+    // Выбор языка
+    document.querySelectorAll(".lang-item").forEach(item => {
+      item.onclick = () => {
+        // убрать выделение со всех
+        document.querySelectorAll(".lang-item").forEach(i => i.classList.remove("selected"));
+        // добавить к текущему
+        item.classList.add("selected");
+        const lang = item.dataset.lang;
+        // здесь можно сохранить выбор (fetch в /api или tg.sendData)
+        console.log("Выбран язык:", lang);
+      };
+    });
   </script>
 </body>
 </html>
