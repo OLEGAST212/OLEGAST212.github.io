@@ -23,37 +23,6 @@
 <body>
   <button id="share-btn">Поделиться ссылкой</button>
 
-  <script>
-    // Ждём, пока Telegram WebApp полностью проинициализируется
-    const tg = Telegram.WebApp;
-    tg.ready();
-    console.log('WebApp запущен, shareData=', typeof tg.shareData);
 
-    document.getElementById('share-btn').addEventListener('click', () => {
-      const shareUrl = 'https://t.me/Barber_HQ_Bot';
-
-      // 1) Попытка через Telegram WebApp API
-      if (typeof tg.shareData === 'function') {
-        tg.shareData({ url: shareUrl });
-        console.log('tg.shareData вызван');
-        return;
-      }
-
-      // 2) Фоллбек: современный Web Share API в браузерах
-      if (navigator.share) {
-        navigator.share({
-          title: 'Сибирь Барбершоп Бот',
-          text: 'Подписывайтесь в Telegram:',
-          url: shareUrl
-        })
-        .then(() => console.log('navigator.share успешен'))
-        .catch(err => console.warn('navigator.share ошибка', err));
-        return;
-      }
-
-      // 3) Финальный фоллбек: prompt()
-      window.prompt('Скопируйте ссылку на бота и поделитесь:', shareUrl);
-    });
-  </script>
 </body>
 </html>
