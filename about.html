@@ -5,23 +5,29 @@
   <meta name="viewport"
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
   <title>О компании</title>
-  <link rel="stylesheet" href="css/about.css"/>
+  <link rel="stylesheet" href="css/shop.css"/>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <header class="ts-header">
-    <button type="button" id="shop-back" class="ts-back-btn">❮ Назад</button>
-    <h1 class="ts-title">О компании</h1>
-  </header>
+  <script>
+    // Telegram WebApp навигация
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    // показываем кнопку назад
+    tg.BackButton.show();
+    tg.onEvent('backButtonClicked', () => history.back());
+  </script>
 
+  <!-- контейнер с контентом -->
   <main class="ts-container">
-    <section class="ts-card ts-company-card">
+    <section class="ts-company-card">
       <div class="ts-logo-wrap">
-        <img src="images/logo.png" alt="Логотип" class="ts-logo">
+        <img src="images/logo.jpg" alt="Логотип" class="ts-logo"/>
       </div>
       <h2 class="ts-company-name">Сибирь</h2>
       <p class="ts-company-subtitle">Барбершоп</p>
       <div class="ts-rating">★★★★★</div>
+
       <div class="ts-section">
         <h3 class="ts-section-title">О компании</h3>
         <p class="ts-text">
@@ -31,21 +37,10 @@
         </p>
       </div>
     </section>
-  </main>
 
-  <footer class="ts-footer">
-    <button type="button" class="ts-big-btn" onclick="window.location.href='reviews.html'">
+    <button type="button" class="ts-big-btn" onclick="location.href='reviews.html'">
       Оставить отзыв
     </button>
-  </footer>
-
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-
-    document.getElementById('shop-back').onclick = () => {
-      history.back();
-    };
-  </script>
+  </main>
 </body>
 </html>
