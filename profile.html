@@ -37,5 +37,13 @@
   </div>
 
   <script type="module" src="js/profile.js"></script>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    document.getElementById('profile-back').onclick = () => {
+      window.location.href = 'index.html';
+    };
+  </script>
 </body>
 </html>

@@ -16,15 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("phone").value = profile.phone || "";
   document.getElementById("email").value = profile.email || "";
 
-  // Кнопка «Назад»
-  document.getElementById("profile-back").addEventListener("click", () => {
-    // вернёмся на главную внутри WebApp
-    if (tg.openLink) {
-      tg.openLink("index.html");
-    } else {
-      window.history.back();
-    }
-  });
+
 
   // Сохранение
   document.getElementById("profile-form").addEventListener("submit", async e => {
