@@ -2,93 +2,41 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Сибирь Барбершоп</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Telegram Web App JS -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <img src="images/logo.jpg" alt="Логотип" class="logo">
-      <div class="branding">
-        <h1>Сибирь</h1>
-        <p>Барбершоп</p>
-      </div>
-    </div>
-  </header>
-
+  <!-- ... ваш хэдер, навигация, контент ... -->
   <nav class="icon-nav">
-    <button class="icon-btn" data-action="address">
-      <img src="images/icon-address.png" alt="Адрес">
-      <span>Адрес</span>
-    </button>
-    <button class="icon-btn" data-action="appointments">
-      <img src="images/icon-appointments.png" alt="Записи">
-      <span>Записи</span>
-    </button>
-    <button id="share-btn" class="icon-btn"  data-action="share">
+    <!-- ... другие кнопки ... -->
+    <button id="share-btn" class="icon-btn" data-action="share">
       <img src="images/icon-share.png" alt="Поделиться">
       <span>Поделиться</span>
     </button>
-    <button class="icon-btn" data-action="profile">
-      <img src="images/icon-profile.png" alt="Профиль">
-      <span>Профиль</span>
-    </button>
+    <!-- ... -->
   </nav>
 
-  <!-- Main action button -->
-  <section class="main-action">
-    <button id="services-btn" class="big-btn">Персональные услуги</button>
-  </section>
+  <!-- ... остальной контент ... -->
 
-  <!-- List menu -->
-  <section class="list-menu">
-  <ul>
-  <li class="list-item" data-action="wallet">
-    <img src="images/icon-wallet.png" alt="" class="list-icon">
-    Кошелёк <span class="badge">0</span>
-  </li>
-  <li class="list-item" data-action="shop">
-    <img src="images/icon-shop.png" alt="" class="list-icon">
-    Магазин
-  </li>
-  <li class="list-item" data-action="reviews">
-    <img src="images/icon-reviews.png" alt="" class="list-icon">
-    Отзывы <span class="value">27</span>
-  </li>
-  <li class="list-item" data-action="about">
-    <img src="images/icon-about.png" alt="" class="list-icon">
-    О компании
-  </li>
-  <li class="list-item" data-action="language">
-    <img src="images/icon-language.png" alt="" class="list-icon">
-    Язык <span class="value">Русский</span>
-  </li>
-</ul>
-</section>
-
-  <!-- Footer -->
   <footer class="footer">
     <small>30.0.0-1508</small>
   </footer>
 
   <script>
-    // Telegram WebApp initialization
+    // 1) Инициализируем WebApp
     const tg = window.Telegram.WebApp;
     tg.ready();
+    console.log("✅ WebApp ready, shareData:", typeof tg.shareData);
 
-    // Главная кнопка
-    document.getElementById('services-btn').onclick = () => {
-      tg.openLink('https://olegast212.github.io/');
-    };
-
-    // Иконки навигации
+    // 2) Остальные кнопки (адрес, записи, профиль...)
     document.querySelectorAll('.icon-btn').forEach(btn => {
+      const action = btn.dataset.action;
       btn.onclick = () => {
-        const action = btn.getAttribute('data-action');
-        switch(action) {
+        switch (action) {
           case 'address':
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
@@ -96,65 +44,36 @@
             window.location.href = 'record.html';
             break;
           case 'profile':
-            // Переход на внутреннюю страницу профиля
             window.location.href = 'profile.html';
+            break;
+          case 'share':
+            // Ниже — код «Поделиться»
+            const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
+            const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
+
+            // A) Telegram WebApp API
+            if (typeof tg.shareData === 'function') {
+              tg.shareData({ text: shareText, url: shareUrl });
+              console.log('▶ tg.shareData called');
+              return;
+            }
+            // B) Web Share API
+            if (navigator.share) {
+              navigator.share({
+                title: shareText,
+                text:  shareText,
+                url:   shareUrl
+              })
+              .then(() => console.log('▶ navigator.share OK'))
+              .catch(e => console.warn('▶ navigator.share error', e));
+              return;
+            }
+            // C) prompt‑fallback
+            window.prompt('Скопируйте ссылку и поделитесь:', shareUrl);
             break;
         }
       };
     });
-    document.querySelectorAll('.list-item').forEach(li => {
-  li.addEventListener('click', () => {
-    const action = li.dataset.action;
-    switch (action) {
-      case 'wallet':
-        window.location.href = 'wallet.html';
-        break;
-      case 'shop':
-        window.location.href = 'shop.html';
-        break;
-      case 'reviews':
-        window.location.href = 'reviews.html';
-        break;
-      case 'about':
-        window.location.href = 'about.html';
-        break;
-      case 'language':
-        window.location.href = 'language.html';
-        break;
-    }
-  });
-});
   </script>
-<script>
-    // Ждём, пока Telegram WebApp полностью проинициализируется
-    console.log('WebApp запущен, shareData=', typeof tg.shareData);
-
-    document.getElementById('share-btn').addEventListener('click', () => {
-      const shareUrl = 'https://t.me/Barber_HQ_Bot';
-
-      // 1) Попытка через Telegram WebApp API
-      if (typeof tg.shareData === 'function') {
-        tg.shareData({ url: shareUrl });
-        console.log('tg.shareData вызван');
-        return;
-      }
-
-      // 2) Фоллбек: современный Web Share API в браузерах
-      if (navigator.share) {
-        navigator.share({
-          title: 'Сибирь Барбершоп Бот',
-          text: 'Подписывайтесь в Telegram:',
-          url: shareUrl
-        })
-        .then(() => console.log('navigator.share успешен'))
-        .catch(err => console.warn('navigator.share ошибка', err));
-        return;
-      }
-
-      // 3) Финальный фоллбек: prompt()
-      window.prompt('Скопируйте ссылку на бота и поделитесь:', shareUrl);
-    });
-  </script>
-
 </body>
 </html>
