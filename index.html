@@ -9,13 +9,21 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    // Показываем встроенную кнопку «Назад»
+    tg.BackButton.show();
+    tg.onEvent('backButtonClicked', () => history.back());
+  </script>
+
   <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <img src="images/logo.png" alt="Логотип" class="logo">
-      <div class="branding">
-        <h1>Сибирь</h1>
-        <p>Барбершоп</p>
+  <header class="app-header">
+    <div class="brand">
+      <img src="images/logo.png" alt="Сибирь Барбершоп" class="brand__logo">
+      <div class="brand__info">
+        <div class="brand__name">Сибирь</div>
+        <div class="brand__subtitle">Барбершоп</div>
       </div>
     </div>
   </header>
@@ -42,49 +50,51 @@
 
   <!-- Main action -->
   <section class="main-action">
-    <button id="services-btn" class="big-btn" data-action="appointments">Персональные услуги</button>
+    <button id="services-btn" class="big-btn" data-action="appointments">
+      Персональные услуги
+    </button>
   </section>
 
   <!-- List menu -->
   <section class="list-menu">
     <ul>
       <li class="list-item" data-action="wallet">
-        <img src="images/icon-wallet.png" alt="" class="list-icon">
-        Кошелёк <span class="badge">0</span>
+        <img src="images/icon-wallet.png" alt="Кошелёк" class="list-icon">
+        <span>Кошелёк</span>
+        <span class="badge">0</span>
       </li>
       <li class="list-item" data-action="shop">
-        <img src="images/icon-shop.png" alt="" class="list-icon">
-        Магазин
+        <img src="images/icon-shop.png" alt="Магазин" class="list-icon">
+        <span>Магазин</span>
       </li>
       <li class="list-item" data-action="reviews">
-        <img src="images/icon-reviews.png" alt="" class="list-icon">
-        Отзывы <span class="badge">27</span>
+        <img src="images/icon-reviews.png" alt="Отзывы" class="list-icon">
+        <span>Отзывы</span>
+        <span class="badge">27</span>
       </li>
       <li class="list-item" data-action="about">
-        <img src="images/icon-about.png" alt="" class="list-icon">
-        О компании
+        <img src="images/icon-about.png" alt="О компании" class="list-icon">
+        <span>О компании</span>
       </li>
       <li class="list-item" data-action="language">
-        <img src="images/icon-language.png" alt="" class="list-icon">
-        Язык <span class="value">Русский</span>
+        <img src="images/icon-language.png" alt="Язык" class="list-icon">
+        <span>Язык</span>
+        <span class="value">Русский</span>
       </li>
     </ul>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <small>30.0.0-1508</small>
+    <small>Версия 30.0.0-1508</small>
   </footer>
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.ready();
-
-    // Общая строка для шейра
     const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
     const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
 
-    // Обработчик верхних иконок
+    // Верхние иконки
     document.querySelectorAll('.icon-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const action = btn.dataset.action;
@@ -96,7 +106,6 @@
             location.href = 'record.html';
             break;
           case 'share':
-            // Единственный способ, который стабильно работает на телефоне:
             const tgShare =
               'https://t.me/share/url?'
               + 'url='  + encodeURIComponent(shareUrl)
@@ -109,28 +118,21 @@
         }
       });
     });
-    document.querySelectorAll('.big-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const action = btn.dataset.action;
-        switch (action) {
-          case 'appointments':
-            location.href = 'appointments.html';
-            break;
 
-        }
-      });
+    // Большая кнопка
+    document.getElementById('services-btn').addEventListener('click', () => {
+      location.href = 'appointments.html';
     });
-
 
     // Нижнее меню
     document.querySelectorAll('.list-item').forEach(li => {
       li.addEventListener('click', () => {
         switch (li.dataset.action) {
-          case 'wallet':   location.href = 'wallet.html'; break;
-          case 'shop':     location.href = 'shop.html';   break;
-          case 'reviews':  location.href = 'reviews.html';break;
-          case 'about':    location.href = 'about.html';  break;
-          case 'language': location.href = 'language.html';break;
+          case 'wallet':   location.href = 'wallet.html';   break;
+          case 'shop':     location.href = 'shop.html';     break;
+          case 'reviews':  location.href = 'reviews.html';  break;
+          case 'about':    location.href = 'about.html';    break;
+          case 'language': location.href = 'language.html'; break;
         }
       });
     });
