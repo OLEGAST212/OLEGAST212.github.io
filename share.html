@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>Сибирь Барбершоп</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Telegram Web App JS -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <img src="images/logo.png" alt="Логотип" class="logo" />
+      <div class="branding">
+        <h1>Сибирь</h1>
+        <p>Барбершоп</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top navigation icons -->
+  <nav class="icon-nav">
+    <button class="icon-btn" data-action="address">
+      <!-- сюда позже иконку вставите -->
+      <span>Адрес</span>
+    </button>
+    <button class="icon-btn" data-action="appointments">
+      <span>Записи</span>
+    </button>
+    <button id="share-btn" class="icon-btn" data-action="share">
+      <span>Поделиться</span>
+    </button>
+    <button class="icon-btn" data-action="profile">
+      <span>Профиль</span>
+    </button>
+  </nav>
+
+  <!-- Main action button -->
+  <section class="main-action">
+    <button id="services-btn" class="big-btn">Персональные услуги</button>
+  </section>
+
+  <!-- List menu -->
+  <section class="list-menu">
+    <ul>
+      <li class="list-item" data-action="wallet">
+        Кошелёк <span class="badge">0</span>
+      </li>
+      <li class="list-item" data-action="shop">Магазин</li>
+      <li class="list-item" data-action="reviews">
+        Отзывы <span class="badge">27</span>
+      </li>
+      <li class="list-item" data-action="about">О компании</li>
+      <li class="list-item" data-action="language">
+        Язык <span class="value">Русский</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <small>30.0.0-1508</small>
+    <p>@SIBIR_BARBERSHOP_bot</p>
+  </footer>
+
+  <script>
+    // Инициализируем Telegram WebApp
+    const tg = Telegram.WebApp;
+    tg.ready();
+
+    // Кнопки «Главная» и т.д.
+    document.getElementById('services-btn').onclick = () => {
+      tg.openLink('https://olegast212.github.io/');
+    };
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+      const action = btn.dataset.action;
+      btn.onclick = () => {
+        switch (action) {
+          case 'address':
+            tg.openLink('https://yandex.ru/maps/?address=Сибирь');
+            break;
+          case 'appointments':
+            tg.sendData(JSON.stringify({ action: 'appointments' }));
+            break;
+          case 'profile':
+            tg.openLink('https://olegast212.github.io/profile.html');
+            break;
+        }
+      };
+    });
+
+    // ——— Нативный шейр ———
+    document.getElementById('share-btn').onclick = () => {
+      const shareUrl = 'https://t.me/SIBIR_BARBERSHOP_bot';
+
+      // 1) Telegram WebApp API
+      if (tg.shareData) {
+        tg.shareData({ url: shareUrl });
+        return;
+      }
+      // 2) Web Share API
+      if (navigator.share) {
+        navigator
+          .share({
+            title: 'Сибирь Барбершоп Бот',
+            text: 'Подписывайтесь на наш Telegram‑бот:',
+            url: shareUrl
+          })
+          .catch(console.warn);
+        return;
+      }
+      // 3) Фоллбек: prompt()
+      window.prompt('Скопируйте ссылку на бота:', shareUrl);
+    };
+  </script>
+</body>
+</html>

@@ -28,7 +28,7 @@
       <img src="images/icon-appointments.png" alt="Записи">
       <span>Записи</span>
     </button>
-    <button class="icon-btn" data-action="share">
+    <button id="share-btn" class="icon-btn"  data-action="share">
       <img src="images/icon-share.png" alt="Поделиться">
       <span>Поделиться</span>
     </button>
@@ -128,5 +128,33 @@
   });
 });
   </script>
+<script>
+  const tg = Telegram.WebApp;
+  tg.ready();
+
+  document.getElementById('share-btn').addEventListener('click', () => {
+    const shareUrl = 'https://t.me/Barber_HQ_Bot';
+
+    // 1) Telegram WebApp API: нативный шейр в Telegram
+    if (typeof tg.shareData === 'function') {
+      tg.shareData({ url: shareUrl });
+      return;
+    }
+
+    // 2) Стандартный Web Share API для браузеров
+    if (navigator.share) {
+      navigator.share({
+        title: 'Сибирь Барбершоп Бот',
+        text: 'Подписывайтесь на нашего Telegram‑бота:',
+        url: shareUrl
+      }).catch(console.warn);
+      return;
+    }
+
+    // 3) Финальный fallback — prompt()
+    window.prompt('Скопируйте ссылку на бота и поделитесь вручную:', shareUrl);
+  });
+</script>
+
 </body>
 </html>
