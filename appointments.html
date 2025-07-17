@@ -15,17 +15,17 @@
     </header>
 
     <ul class="options-list">
-      <li class="option-item" data-key="employee">
+      <li class="option-item" data-key="employee" data-action="employee">
         <img src="images/icon-employee.png" alt="" class="opt-icon"/>
         <span class="opt-text">Сотрудник</span>
         <span class="opt-arrow">❯</span>
       </li>
-      <li class="option-item" data-key="datetime">
+      <li class="option-item" data-key="datetime" data-action="datetime">
         <img src="images/icon-datetime.png" alt="" class="opt-icon"/>
         <span class="opt-text">Дата и время</span>
         <span class="opt-arrow">❯</span>
       </li>
-      <li class="option-item" data-key="service">
+      <li class="option-item" data-key="service" data-action="service">
         <img src="images/icon-services.png" alt="" class="opt-icon"/>
         <span class="opt-text">Услуги</span>
         <span class="opt-arrow">❯</span>
@@ -46,17 +46,22 @@
     const state = { employee: false, datetime: false, service: false };
     const confirmBtn = document.getElementById('confirm-btn');
 
-    document.querySelectorAll('.option-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const key = item.dataset.key;
-        // Здесь вы можете открыть подменю или WebApp.openLink(...)
-        // Для прототипа просто переключаем состояние:
-        state[key] = !state[key];
-        item.classList.toggle('chosen', state[key]);
-        updateConfirm();
+    document.querySelectorAll('.option-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        switch (action) {
+          case 'employee':
+            location.href = 'employees.html';
+            break;
+          case 'datetime':
+            location.href = 'employees.html';
+            break;
+          case 'service':
+          location.href = 'employees.html';
+          break;
+        }
       });
     });
-
     function updateConfirm() {
       const ready = Object.values(state).every(v => v);
       confirmBtn.disabled = !ready;
