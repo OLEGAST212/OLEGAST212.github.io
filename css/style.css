@@ -88,4 +88,82 @@ body {
   background-color: #2F80ED;
   color: #FFFFFF;
   border: none;
-  border-radius: 8px
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* List menu */
+.list-menu {
+  margin-top: 8px;
+}
+.list-menu ul {
+  list-style: none;
+}
+/* Иконки в списке тоже делаем круглые */
+.list-item {
+  position: relative; /* чтобы ::after работал */
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  font-weight: 600;
+}
+.list-item:last-child {
+  border-bottom: none;
+}
+.list-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* Бейдж */
+.list-item .badge {
+  margin-left: auto;
+  margin-right: 24px;
+  background-color: #F2C94C;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: #333333;
+}
+/* «Значение» (например, язык) */
+.list-item .value {
+  margin-left: auto;
+  margin-right: 24px;
+}
+/* Стрелка */
+.list-item::after {
+  content: "❯";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #BDBDBD;
+  font-weight: normal;
+}
+
+/* Footer */
+.footer {
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 10px;
+  color: #BDBDBD;
+  margin-top: 8px;
+}
+.footer small {
+  display: block;
+  margin-bottom: 4px;
+}
+.footer p {
+  margin: 0;
+}
