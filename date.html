@@ -1,110 +1,324 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport"
-        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-  <title>Дата и время</title>
-  <link rel="stylesheet" href="css/date.css"/>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body>
-  <header class="dt-header">
-    <button type="button" id="back" class="dt-back">❮ Назад</button>
-    <h1 class="dt-title">Дата и время</h1>
-  </header>
-
-  <main class="dt-main">
-    <!-- навигация по месяцам -->
-    <div class="dt-month-nav">
-      <button class="dt-month-btn dt-prev">&lt;</button>
-      <h2 class="dt-month-name">Июль</h2>
-      <button class="dt-month-btn dt-next">Август</button>
-    </div>
-
-    <!-- календарь -->
-    <div class="dt-calendar">
-      <!-- дни недели -->
-      <div class="dt-wday">Пн</div><div class="dt-wday">Вт</div><div class="dt-wday">Ср</div>
-      <div class="dt-wday">Чт</div><div class="dt-wday">Пт</div><div class="dt-wday">Сб</div><div class="dt-wday">Вс</div>
-      <!-- числа (disabled у прошлых) -->
-      <button class="dt-day disabled">1</button>
-      <button class="dt-day disabled">2</button>
-      <!-- … -->
-      <button class="dt-day">17</button>
-      <!-- выделенный -->
-      <button class="dt-day selected">25</button>
-      <!-- … остальные дни -->
-    </div>
-
-    <!-- таймслоты -->
-    <section class="dt-slots">
-      <h3>Утро</h3>
-      <div class="dt-times">
-        <button class="dt-time">11:00</button>
-        <button class="dt-time">11:30</button>
-      </div>
-      <h3>День</h3>
-      <div class="dt-times">
-        <button class="dt-time">12:00</button>
-        <button class="dt-time">12:30</button>
-        <button class="dt-time">13:00</button>
-        <button class="dt-time">13:30</button>
-        <button class="dt-time">15:00</button>
-        <button class="dt-time">15:30</button>
-      </div>
-      <h3>Вечер</h3>
-      <div class="dt-times">
-        <button class="dt-time">18:00</button>
-        <button class="dt-time">18:30</button>
-        <button class="dt-time">19:00</button>
-        <button class="dt-time">19:30</button>
-        <button class="dt-time">20:00</button>
-        <button class="dt-time">20:30</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="dt-footer">
-    <button id="confirm" class="dt-btn" disabled>Занять</button>
-  </footer>
-
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    document.getElementById('back').onclick = () => history.back();
-
-    let selectedDay = null;
-    document.querySelectorAll('.dt-day:not(.disabled)').forEach(btn => {
-      btn.onclick = () => {
-        if (selectedDay) selectedDay.classList.remove('selected');
-        btn.classList.add('selected');
-        selectedDay = btn;
-        tryEnableConfirm();
-      };
-    });
-
-    let selectedTime = null;
-    document.querySelectorAll('.dt-time').forEach(btn => {
-      btn.onclick = () => {
-        if (selectedTime) selectedTime.classList.remove('selected');
-        btn.classList.add('selected');
-        selectedTime = btn;
-        tryEnableConfirm();
-      };
-    });
-
-    function tryEnableConfirm() {
-      const ok = selectedDay && selectedTime;
-      document.getElementById('confirm').disabled = !ok;
+  <meta charset="UTF-8">
+  <title>Календарь бронирования</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 380px;
+      margin: 0 auto;
+      padding: 0 0 32px 0;
+    }
+    .calendar-wrapper {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 16px 24px 16px;
+      box-shadow: 0 2px 12px rgba(24,24,28,.03);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .calendar-month {
+      flex: 1;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .calendar-arrow {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #2787f5;
+    }
+    .calendar-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+    }
+    .calendar-table th, .calendar-table td {
+      width: 14.285%;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 15px;
+      border-radius: 8px;
+      transition: background 0.18s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .calendar-table th {
+      font-weight: 400;
+      color: #bcbcbc;
+      cursor: default;
+      font-size: 13px;
+      padding-bottom: 4px;
+    }
+    .calendar-table td:hover:not(.disabled):not(.selected) {
+      background: #f5f8fa;
+    }
+    .calendar-table td.selected {
+      background: #F2C94C;
+      color: #222;
+      font-weight: 600;
+    }
+    .calendar-table td.disabled {
+      color: #ccd2da;
+      background: #f2f3f5;
+      cursor: not-allowed;
     }
 
-    document.getElementById('confirm').onclick = () => {
-      const date = selectedDay.textContent;
-      const time = selectedTime.textContent;
-      // здесь можно сохранить выбор или передать дальше
-      alert(`Вы выбрали ${date} и ${time}`);
-    };
-  </script>
+    .section-title {
+      font-size: 16px;
+      color: #828282;
+      letter-spacing: 1.2px;
+      font-weight: 600;
+      margin: 28px 0 6px 0;
+    }
+    .time-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .time-btn {
+      flex: 1 1 40%;
+      min-width: 80px;
+      margin: 0;
+      padding: 12px 0;
+      background: #fff;
+      border: 1.5px solid #2787f5;
+      color: #2787f5;
+      font-size: 18px;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      margin-bottom: 0;
+    }
+    .time-btn.selected {
+      background: #626366;
+      color: #fff;
+      border-color: #626366;
+      font-weight: 600;
+    }
+    .book-actions {
+      display: flex;
+      gap: 10px;
+      margin: 18px 0 0 0;
+    }
+    .book-actions .time-btn.selected {
+      flex: none;
+      min-width: 75px;
+      font-size: 16px;
+      margin: 0;
+      pointer-events: none;
+    }
+    .book-btn {
+      flex: none;
+      min-width: 95px;
+      padding: 12px 0;
+      background: #2787f5;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 0;
+      transition: background 0.18s;
+    }
+    .book-btn:active {
+      background: #1d70c6;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="calendar-wrapper">
+    <div style="display:flex;align-items:center;gap:6px; margin-bottom:8px;">
+      <button onclick="history.back()" style="border:none;background:none;font-size:18px;color:#2787f5;cursor:pointer;">←</button>
+      <div style="flex:1;text-align:center;font-size:20px;font-weight:600;">Дата и время</div>
+    </div>
+    <div class="calendar-header">
+      <button class="calendar-arrow" id="prevMonthBtn">&lt;</button>
+      <div class="calendar-month" id="calendarMonth"></div>
+      <button class="calendar-arrow" id="nextMonthBtn">&gt;</button>
+    </div>
+    <table class="calendar-table">
+      <thead>
+      <tr>
+        <th>ПН</th><th>ВТ</th><th>СР</th><th>ЧТ</th><th>ПТ</th><th>СБ</th><th>ВС</th>
+      </tr>
+      </thead>
+      <tbody id="calendarBody"></tbody>
+    </table>
+  </div>
+
+  <div id="timeContainer" style="display:none;">
+    <div class="section-title">Выберите время начала</div>
+    <div>
+      <div class="section-title" style="font-size:13px; margin-top:10px;">УТРО</div>
+      <div class="time-grid" id="morningGrid"></div>
+      <div class="section-title" style="font-size:13px; margin-top:12px;">ДЕНЬ</div>
+      <div class="time-grid" id="dayGrid"></div>
+      <div class="section-title" style="font-size:13px; margin-top:12px;">ВЕЧЕР</div>
+      <div class="time-grid" id="eveningGrid"></div>
+    </div>
+    <div class="book-actions" id="bookActions" style="display:none;">
+      <button class="time-btn selected" id="selectedTime"></button>
+      <button class="book-btn" id="bookBtn">Занять</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Календарь
+  const months = [
+    "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+    "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+  ];
+  let currentDate = new Date();
+  let selectedDate = null;
+
+  const calendarMonth = document.getElementById("calendarMonth");
+  const calendarBody = document.getElementById("calendarBody");
+
+  function renderCalendar(date) {
+    calendarMonth.textContent = months[date.getMonth()];
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    const firstDay = new Date(year, month, 1);
+    let startDay = firstDay.getDay() - 1;
+    if (startDay < 0) startDay = 6; // В JS воскресенье = 0, а у нас — последний
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    calendarBody.innerHTML = '';
+    let row = document.createElement('tr');
+    let dayCount = 0;
+
+    // Пустые ячейки до первого дня месяца
+    for (let i = 0; i < startDay; i++) {
+      row.appendChild(document.createElement('td'));
+      dayCount++;
+    }
+
+    // Дни месяца
+    for (let d = 1; d <= daysInMonth; d++) {
+      if (dayCount === 7) {
+        calendarBody.appendChild(row);
+        row = document.createElement('tr');
+        dayCount = 0;
+      }
+      const td = document.createElement('td');
+      td.textContent = d;
+
+      // Прошедшие дни делаем disabled
+      let today = new Date();
+      today.setHours(0,0,0,0);
+      let thisDay = new Date(year, month, d);
+
+      if (thisDay < today) {
+        td.classList.add('disabled');
+      } else {
+        td.addEventListener('click', () => {
+          // Сбросить выделение с других
+          calendarBody.querySelectorAll('td.selected').forEach(e => e.classList.remove('selected'));
+          td.classList.add('selected');
+          selectedDate = new Date(year, month, d);
+          showTimeSlots();
+        });
+      }
+      if (
+        selectedDate &&
+        selectedDate.getDate() === d &&
+        selectedDate.getMonth() === month &&
+        selectedDate.getFullYear() === year
+      ) {
+        td.classList.add('selected');
+      }
+
+      row.appendChild(td);
+      dayCount++;
+    }
+    // Пустые ячейки в конце месяца
+    while (dayCount < 7) {
+      row.appendChild(document.createElement('td'));
+      dayCount++;
+    }
+    calendarBody.appendChild(row);
+  }
+
+  document.getElementById('prevMonthBtn').onclick = () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate);
+  };
+  document.getElementById('nextMonthBtn').onclick = () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+  };
+
+  // Тайм-слоты
+  const timeContainer = document.getElementById('timeContainer');
+  const bookActions = document.getElementById('bookActions');
+  const selectedTime = document.getElementById('selectedTime');
+  const bookBtn = document.getElementById('bookBtn');
+  const morning = ['11:00', '11:30'];
+  const day = ['12:00', '12:30', '13:00', '13:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
+  const evening = ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30'];
+
+  function showTimeSlots() {
+    timeContainer.style.display = 'block';
+
+    function renderTime(gridId, times) {
+      const grid = document.getElementById(gridId);
+      grid.innerHTML = '';
+      times.forEach(time => {
+        const btn = document.createElement('button');
+        btn.className = 'time-btn';
+        btn.textContent = time;
+        btn.onclick = () => {
+          // Снять выделение с других
+          document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          // Показать блок бронирования
+          bookActions.style.display = 'flex';
+          selectedTime.textContent = time;
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    renderTime('morningGrid', morning);
+    renderTime('dayGrid', day);
+    renderTime('eveningGrid', evening);
+
+    // Скрыть кнопку, если время не выбрано
+    bookActions.style.display = 'none';
+  }
+
+  bookBtn.onclick = () => {
+    // Переход на appointments.html
+    window.location.href = 'appointments.html';
+  };
+
+  // Первичный рендер
+  renderCalendar(currentDate);
+
+</script>
 </body>
 </html>
