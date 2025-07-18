@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Услуги</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/service.css">
+</head>
+<body>
+  <!-- Верхняя панель -->
+  <div class="app-bar">
+    <button onclick="history.back()">←</button>
+    <div class="app-bar-title">Услуги</div>
+  </div>
+
+  <!-- Категория -->
+  <div class="cat-block">
+    Стрижки
+    <span class="cat-badge">17</span>
+  </div>
+
+  <!-- Список услуг -->
+  <div class="service-list">
+    <div class="service-card" data-id="1">
+      <div class="service-info">
+        <div class="service-title">Мужская стрижка</div>
+        <div class="service-btns">
+          <button class="more-btn" data-action="more">Подробнее</button>
+        </div>
+      </div>
+      <div>
+        <span class="service-price">1400Р — 1700Р</span>
+        <button class="plus-btn" data-action="plus">+</button>
+      </div>
+    </div>
+    <div class="service-card" data-id="2">
+      <div class="service-info">
+        <div class="service-title">Детская стрижка (до 10 лет)</div>
+        <div class="service-btns">
+          <button class="more-btn" data-action="more">Подробнее</button>
+        </div>
+      </div>
+      <div>
+        <span class="service-price">1200Р — 1400Р</span>
+        <button class="plus-btn" data-action="plus">+</button>
+      </div>
+    </div>
+    <div class="service-card" data-id="3">
+      <div class="service-info">
+        <div class="service-title">Стрижка машинкой</div>
+        <div class="service-btns">
+          <button class="more-btn" data-action="more">Подробнее</button>
+        </div>
+      </div>
+      <div>
+        <span class="service-price">1000Р — 1200Р</span>
+        <button class="plus-btn" data-action="plus">+</button>
+      </div>
+    </div>
+    <div class="service-card" data-id="4">
+      <div class="service-info">
+        <div class="service-title">Стрижка бороды и усов</div>
+        <div class="service-btns">
+          <button class="more-btn" data-action="more">Подробнее</button>
+        </div>
+      </div>
+      <div>
+        <span class="service-price">1000Р — 1200Р</span>
+        <button class="plus-btn" data-action="plus">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Кнопка "Продолжить запись" -->
+  <div class="continue-bar" id="continueBar" style="display: none;">
+    <span>Продолжить запись</span>
+    <span class="continue-price" id="continuePrice"></span>
+    <button class="continue-btn" id="continueBtn">→</button>
+  </div>
+
+  <!-- Модальное окно "Подробнее" -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-subtitle" id="modalSubtitle"></div>
+      <hr class="modal-hr">
+      <div class="modal-label">ОБ УСЛУГЕ</div>
+      <div class="modal-desc" id="modalDesc"></div>
+    </div>
+  </div>
+
+  <script>
+    // Пример данных (можно подключать с сервера/JSON)
+    const services = [
+      {
+        id: 1,
+        title: "Мужская стрижка",
+        subtitle: "Основные услуги",
+        price: "1400Р — 1700Р",
+        desc: "Мужская стрижка это не просто причёска, это способ выразить свой стиль и индивидуальность"
+      },
+      {
+        id: 2,
+        title: "Детская стрижка (до 10 лет)",
+        subtitle: "Стрижки детям",
+        price: "1200Р — 1400Р",
+        desc: "Аккуратные и быстрые стрижки для малышей с заботой и вниманием"
+      },
+      {
+        id: 3,
+        title: "Стрижка машинкой",
+        subtitle: "Уход за волосами",
+        price: "1000Р — 1200Р",
+        desc: "Классическая и современная стрижка машинкой, быстро и качественно"
+      },
+      {
+        id: 4,
+        title: "Стрижка бороды и усов",
+        subtitle: "Барберинг",
+        price: "1000Р — 1200Р",
+        desc: "Поддержание формы бороды и усов, индивидуальный подход к каждому гостю"
+      }
+    ];
+
+    // Модалка "Подробнее"
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalDesc = document.getElementById('modalDesc');
+    document.querySelectorAll('.more-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        const card = e.target.closest('.service-card');
+        const service = services.find(s => s.id == card.dataset.id);
+        modalTitle.textContent = service.title;
+        modalSubtitle.textContent = service.subtitle;
+        modalDesc.textContent = service.desc;
+        modal.style.display = 'flex';
+      }
+    });
+    document.getElementById('modalClose').onclick = () => {
+      modal.style.display = 'none';
+    };
+    window.onclick = e => {
+      if (e.target === modal) modal.style.display = 'none';
+    }
+
+    // Добавление услуги
+    let selectedService = null;
+    document.querySelectorAll('.plus-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        // Снять выделение со всех
+        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.plus-btn').forEach(b => {
+          b.textContent = '+';
+          b.className = 'plus-btn';
+        });
+        // Отметить выбранную
+        const card = e.target.closest('.service-card');
+        card.classList.add('selected');
+        btn.textContent = '×';
+        btn.className = 'minus-btn';
+        selectedService = services.find(s => s.id == card.dataset.id);
+        document.getElementById('continuePrice').textContent = selectedService.price.split('—')[0].trim();
+        document.getElementById('continueBar').style.display = 'flex';
+      };
+    });
+    // Снять выбор
+    document.querySelectorAll('.service-list').forEach(list => {
+      list.onclick = e => {
+        if (e.target.classList.contains('minus-btn')) {
+          e.target.textContent = '+';
+          e.target.className = 'plus-btn';
+          e.target.closest('.service-card').classList.remove('selected');
+          selectedService = null;
+          document.getElementById('continueBar').style.display = 'none';
+        }
+      };
+    });
+
+    // Переход на appointments.html
+    document.getElementById('continueBtn').onclick = () => {
+      window.location.href = 'appointments.html';
+    };
+  </script>
+</body>
+</html>
