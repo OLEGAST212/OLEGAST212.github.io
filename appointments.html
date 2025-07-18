@@ -68,11 +68,10 @@
       confirmBtn.classList.toggle('enabled', ready);
     }
 
-    confirmBtn.addEventListener('click', () => {
-      if (!confirmBtn.disabled) {
+    confirmBtn.addEventListener('click', () => {{
         // TODO: сохранить запись через API, tg.sendData(...)
-        alert('Запись оформлена!');
-        tg.close();
+        location.href = 'booking.html';
+
       }
     });
   </script>

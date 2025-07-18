@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформление записи</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+  <div class="app-bar">
+    <button onclick="history.back()">←</button>
+    <div class="app-bar-title">Оформление записи</div>
+  </div>
+
+  <div class="container">
+    <!-- Информация о записи -->
+    <div class="block-title">ИНФОРМАЦИЯ О ЗАПИСИ</div>
+    <div class="info-block">
+      <div class="info-row">
+        <div class="info-date"><span class="info-date-num">30</span> <span class="info-date-weekday">Среда</span></div>
+        <div class="info-time">15:00</div>
+      </div>
+      <div class="info-master">
+        <img src="images/master.jpg" alt="Максим" class="master-avatar">
+        <div class="master-info">
+          <div class="master-name">Максим</div>
+          <div class="master-role">Барбер</div>
+        </div>
+        <div class="master-duration">1ч</div>
+      </div>
+      <div class="info-service">
+        <span>Мужская стрижка</span>
+        <span class="info-price">1 400 ₽</span>
+      </div>
+      <div class="info-total">
+        <span>Итого к оплате:</span>
+        <span class="total-price">1 400 ₽</span>
+      </div>
+    </div>
+
+    <!-- Профиль клиента -->
+    <div class="block-title">ПРОФИЛЬ КЛИЕНТА</div>
+    <div class="list-item">
+      <div class="list-icon profile"></div>
+      <span>Олег</span>
+      <span class="list-link"></span>
+    </div>
+
+    <!-- Напоминание -->
+    <div class="block-title">НАПОМИНАНИЕ О ВИЗИТЕ</div>
+    <div class="list-item">
+      <div class="list-icon reminder"></div>
+      <span>Напомнить за</span>
+      <span class="list-value">2 часа</span>
+      <span class="list-link"></span>
+    </div>
+
+    <!-- Ваши пожелания -->
+    <div class="block-title">ВАШИ ПОЖЕЛАНИЯ</div>
+    <textarea class="wish-input" placeholder=" "></textarea>
+
+    <!-- Условия использования -->
+    <div class="accept-row">
+      <a href="#" id="termsLink" class="terms-link">Условия использования</a>
+      <label class="switch">
+        <input type="checkbox" id="acceptTerms">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="terms-desc">
+      Нажимая кнопку записаться, вы принимаете условия сервиса «онлайн-запись» и политику обработки персональных данных
+    </div>
+
+    <!-- Кнопка записаться -->
+    <button id="bookBtn" class="book-btn" disabled>Записаться</button>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button id="modalClose" class="modal-close">×</button>
+      <div class="modal-scroll" id="modalText"></div>
+    </div>
+  </div>
+
+  <script>
+    // Модальное окно условий
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modalText');
+    const modalClose = document.getElementById('modalClose');
+    const termsLink = document.getElementById('termsLink');
+    termsLink.onclick = function(e) {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      modalText.innerHTML = `
+        <div class="modal-title">УСЛОВИЯ ИСПОЛЬЗОВАНИЯ СЕРВИСА «ОНЛАЙН-ЗАПИСЬ»</div>
+        <p><b>1. Общие положения</b></p>
+        <p>1.1. ООО «КУБ» (далее — « qoob ») предлагает пользователю сети Интернет (далее — Пользователь) — использовать сервис «Онлайн-запись» (далее — «Сервис»).</p>
+        <p>1.2. Настоящие Условия представляют собой дополнение к Пользовательскому соглашению сервисов qoob относительно порядка использования Сервиса. Во всем, что не предусмотрено настоящими Условиями, отношения между qoob и Пользователем в связи с использованием Сервиса регулируются Пользовательским соглашением сервисов qoob (<a href="https://qoob.store/user-agreement-conditions/" target="_blank">https://qoob.store/user-agreement-conditions/</a>), а также Политикой конфиденциальности (<a href="https://qoob.store/privacy-policy/" target="_blank">https://qoob.store/privacy-policy/</a>).</p>
+        <p>1.3. Начиная использовать Сервис / его отдельные функции, Пользователь считается принявшим настоящие Условия, а также условия всех указанных выше документов, в полном объеме, без всяких оговорок и исключений. В случае несогласия Пользователя с какими-либо из положений указанных документов, Пользователь не вправе использовать Сервис.</p>
+        <p>1.4. Настоящие Условия могут быть изменены qoob без какого-либо специального уведомления, новая редакция Условий вступает в силу с момента ее размещения в сети Интернет по указанному в настоящем абзаце адресу, если иное не предусмотрено новой редакцией Условий. Действующая редакция Условий всегда находится на странице по адресу: <a href="https://qoob.store/online-booking-service-using-conditions/" target="_blank">https://qoob.store/online-booking-service-using-conditions/</a>.</p>
+        <p>1.5. В случае если qoob были внесены какие-либо изменения в настоящие Условия, в порядке, предусмотренном п. 1.4. настоящих Условий, с которыми Пользователь не согласен, он обязан прекратить использование Сервиса.</p>
+        <p>1.6. Сервис предоставляет Пользователю возможность ознакомиться с информацией об оказываемых организациями услугах, а также разместить информацию о потенциальном спросе Пользователя на услуги организаций и получить доступ к предложениям партнеров qoob по предварительной записи в организации в соответствии с выбранными Пользователем параметрами.</p>
+        <p><b>2. Использования Сервиса. Отдельные функции Сервиса</b></p>
+        <p>2.1. Любая информация, используемая в Сервисе, предназначена исключительно для некоммерческого использования.</p>
+        <p>2.2. Информация об услугах, оказываемых организациями, предоставлена партнерами Сервиса. qoob не несет ответственности за содержание и / или актуальность информации, предоставленной партнерами Сервиса, включая информацию о стоимости услуг организаций, а также о возможности предварительной записи в организации.</p>
+        <p>2.3. Взаимодействие Пользователя с партнерами по вопросам предварительной записи в организации осуществляется Пользователем самостоятельно (без участия qoob) в соответствии с принятыми у партнеров правилами оказания услуг. qoob не несет ответственности за любые операции, совершаемые Пользователем и партнерами в процессе предварительной записи в организации.</p>
+        <p>2.4. Пользователь дает qoob согласие на обработку личных данных Пользователя, на передачу qoob персональных данных Пользователя партнерам Сервиса, а также на обработку персональных данных партнерам Сервиса для целей оказания Пользователю услуг в рамках Сервиса. Обработка данных Пользователя qoob осуществляется на условиях «Политики конфиденциальности», размещенной в сети Интернет по адресу: <a href="https://qoob.store/privacy-policy/" target="_blank">https://qoob.store/privacy-policy/</a>.</p>
+        <p>2.5. Пользователю могут быть доступны функции оценки услуг организаций, а также размещение комментариев/отзывов о Сервисе и/или услугах партнеров Сервиса. Оценки и отзывы пользователей размещаются в приложении qoob, а также могут быть доступны на сайтах третьих лиц. При использовании указанных функций Пользователь обязуется соблюдать требования к контенту Пользователя, предусмотренные Пользовательским соглашением. qoob оставляет за собой право отказать в размещении любых оценки/отзыва, а также в любой момент удалить/заблокировать размещенные Пользователем оценку/отзыв по своему усмотрению и без указания причин.</p>
+        <p>2.6. qoob оставляет за собой право на свое усмотрение ограничить доступ Пользователя к Сервису (или к определенным функциям Сервиса, если это возможно технологически) с использованием его учетной записи или полностью заблокировать учетную запись Пользователя при неоднократном нарушении настоящих Условий, либо применить к Пользователю иные меры с целью соблюдения требований законодательства или прав и законных интересов третьих лиц.</p>
+        <div style="margin:18px 0 0 0;color:#bbb;font-size:13px;">Дата публикации: 26.04.2021 г.</div>
+      `;
+    };
+    modalClose.onclick = () => { modal.style.display = 'none'; }
+    window.onclick = e => {
+      if (e.target === modal) modal.style.display = 'none';
+    }
+
+    // Кнопка Записаться становится активной при согласии
+    const acceptTerms = document.getElementById('acceptTerms');
+    const bookBtn = document.getElementById('bookBtn');
+    acceptTerms.onchange = function() {
+      bookBtn.disabled = !this.checked;
+    };
+    bookBtn.onclick = function() {
+      if (!this.disabled) window.location.href = "success.html";
+    }
+  </script>
+</body>
+</html>
