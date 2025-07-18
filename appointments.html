@@ -32,7 +32,8 @@
       </li>
     </ul>
 
-    <button id="confirm-btn" class="confirm-btn" disabled>Оформить запись</button>
+    <!-- КНОПКА ТЕПЕРЬ ВСЕГДА АКТИВНА -->
+    <button id="confirm-btn" class="confirm-btn">Оформить запись</button>
   </div>
 
   <script>
@@ -41,10 +42,6 @@
 
     // Назад
     document.getElementById('appt-back').onclick = () => window.location.href = 'index.html';
-
-    // Логика активации кнопки
-    const state = { employee: false, datetime: false, service: false };
-    const confirmBtn = document.getElementById('confirm-btn');
 
     document.querySelectorAll('.option-item').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -57,17 +54,16 @@
             location.href = 'date.html';
             break;
           case 'service':
-          location.href = 'service.html';
-          break;
+            location.href = 'service.html';
+            break;
         }
       });
     });
 
-    confirmBtn.addEventListener('click', () => {{
-        // TODO: сохранить запись через API, tg.sendData(...)
-        location.href = 'booking.html';
-
-      }
+    // Кнопка всегда активна и работает
+    document.getElementById('confirm-btn').addEventListener('click', () => {
+      // TODO: сохранить запись через API, tg.sendData(...)
+      location.href = 'booking.html';
     });
   </script>
 </body>
