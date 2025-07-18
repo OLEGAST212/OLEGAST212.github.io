@@ -64,7 +64,7 @@
     });
     function updateConfirm() {
       const ready = Object.values(state).every(v => v);
-      confirmBtn.disabled = !ready;
+      confirmBtn.disabled = ready;
       confirmBtn.classList.toggle('enabled', ready);
     }
 
