@@ -9,8 +9,6 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-
-
   <!-- Header -->
   <header class="app-header">
     <div class="brand">
@@ -84,9 +82,10 @@
   </footer>
 
   <script>
+    // Инициализация Telegram WebApp API
     const tg = window.Telegram.WebApp;
     tg.ready();
-    const tg = window.Telegram.WebApp;
+
     const shareUrl  = 'https://t.me/SIBIR_BARBERSHOP_bot';
     const shareText = 'Присоединяйтесь к боту «Сибирь Барбершоп»!';
 
@@ -99,7 +98,7 @@
             tg.openLink('https://yandex.ru/maps/org/sibir/237591966386/');
             break;
           case 'record':
-            location.href = 'record.html';
+            window.location.href = 'record.html';
             break;
           case 'share':
             const tgShare =
@@ -109,7 +108,7 @@
             tg.openLink(tgShare);
             break;
           case 'profile':
-            location.href = 'profile.html';
+            window.location.href = 'profile.html';
             break;
         }
       });
@@ -117,18 +116,18 @@
 
     // Большая кнопка
     document.getElementById('services-btn').addEventListener('click', () => {
-      location.href = 'appointments.html';
+      window.location.href = 'appointments.html';
     });
 
     // Нижнее меню
     document.querySelectorAll('.list-item').forEach(li => {
       li.addEventListener('click', () => {
         switch (li.dataset.action) {
-          case 'wallet':   location.href = 'wallet.html';   break;
-          case 'shop':     location.href = 'shop.html';     break;
-          case 'reviews':  location.href = 'reviews.html';  break;
-          case 'about':    location.href = 'about.html';    break;
-          case 'language': location.href = 'language.html'; break;
+          case 'wallet':   window.location.href = 'wallet.html';   break;
+          case 'shop':     window.location.href = 'shop.html';     break;
+          case 'reviews':  window.location.href = 'reviews.html';  break;
+          case 'about':    window.location.href = 'about.html';    break;
+          case 'language': window.location.href = 'language.html'; break;
         }
       });
     });
