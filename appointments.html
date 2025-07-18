@@ -62,11 +62,6 @@
         }
       });
     });
-    function updateConfirm() {
-      const ready = Object.values(state).every(v => v);
-      confirmBtn.disabled = ready;
-      confirmBtn.classList.toggle('enabled', ready);
-    }
 
     confirmBtn.addEventListener('click', () => {{
         // TODO: сохранить запись через API, tg.sendData(...)
