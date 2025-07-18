@@ -82,16 +82,15 @@ html, body {
 .confirm-btn {
   margin-top: auto;
   height: 48px;
-  background: #E0E0E0;
-  color: #828282;
+  background: #2F80ED;
+  color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
-  cursor: not-allowed;
-}
-.confirm-btn.enabled {
-  background: #FFD600;
-  color: #1F1F1F;
   cursor: pointer;
+  transition: background .16s;
+}
+.confirm-btn:active {
+  background: #2069c6;
 }
